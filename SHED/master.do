@@ -10,18 +10,18 @@ DIFFERENTLY FOR YEARS < 2017, CHECK CODEBOOKS*/;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Main directory;
-global basedir /Users/brianlivingston/Documents/GitHub/HtM/SHED;
+global basedir /Users/Brian/Documents/GitHub/HtM/SHED;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD DIRECTORY;
-* Build THE dataset;
-cd $basedir/build/code;
+* Build dataset;
+cd ${basedir}/build/code;
 do build.do;
 * Clean;
-cd $basedir/build/code;
+cd ${basedir}/build/code;
 do build_missing.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Compute HtM statistics;
-cd $basedir/stats/code;
+cd ${basedir}/stats/code;
 do stats.do;

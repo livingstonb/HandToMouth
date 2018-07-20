@@ -20,14 +20,12 @@ replace year = 2016 if year == .;
 append using SHED2017.dta;
 replace year = 2017 if year == .;
 
-* Codebook suggests weight3b, which excludes experimental Spanish language sample;
 rename weight3b wgt;
 replace wgt = weight3 if year == 2014;
 replace wgt = weight if year == 2013;
 ////////////////////////////////////////////////////////////////////////////////
 * RENAME VARIABLES;
 * Make sure to add any new variables to missing.do to clean missing values!;
-
 rename 	B1_a 	havemoney;
 replace havemoney = . if year == 2013;
 rename 	M4 		mortpmt;

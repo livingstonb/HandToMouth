@@ -1,13 +1,17 @@
 //////////////////////////////////////////////////////////////////////////////
 #delimit;
+set more 1;
 cap mkdir $basedir/stats/output;
+
+/* This is the main do-file for computing hand-to-mouth statistics for the SCF.
+Written by Brian Livingston */;
 
 cd $basedir/build/output;
 use SCF_89_16_cleaned.dta, clear;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Select which income variable to use (labinc,netlabinc);
-gen incvar = labinc;
+gen incvar = netlabinc;
 * How many months of income to use as credit limit (1,2,...);
 gen clim = 1;
 * Select which liquid assets variable to use (netbrliq);
@@ -25,8 +29,8 @@ global borrowlimtype normal;
 global h2mtype normal;
 
 ////////////////////////////////////////////////////////////////////////////////
-* sample selection;
-*AGE RESTRICTIONS;
+* SAMPLE SELECTION;
+* Age restrictions;
 keep if age>=22 & age<=79;
 
 * drop if negative labor income;
@@ -34,19 +38,16 @@ drop if labinc<0;
 
 * drop if have only self employment income;
 drop if (labearn1 == 0 & selfearn1>0) | (labearn2 == 0 &  selfearn2>0);
-////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////
+* COMPUTE STATISTICS;
 
 * Compute h2m statistics here;
 global dataset SCF;
 cd $basedir/../code;
 do compute_h2m.do;
 
-
-////////////////////////////////////////////////////////////////////////////////
-* COMPUTE STATISTICS;
-
-* Compute yearly h2m;
+* Average h2m by year;
 preserve;
 cd $basedir/../code;
 do yearly_h2m.do;

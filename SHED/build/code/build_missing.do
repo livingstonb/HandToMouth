@@ -2,6 +2,8 @@
 clear;
 set more 1;
 
+/* Codes missing values */;
+
 ///////////////////////////////////////////////////////////////////////////////;
 cd $basedir/build/temp;
 use SHED_temp.dta;
