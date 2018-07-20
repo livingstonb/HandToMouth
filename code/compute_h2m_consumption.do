@@ -13,5 +13,4 @@ gen Ph2m	= (h2m==1) & (Wh2m==0);
 replace h2m 	= . if (con==.)|(incvar==.)|(liqvar==.);
 replace Wh2m 	= . if h2m==.;
 replace Ph2m 	= . if h2m==.;
-gen		NWh2m	= .;
 

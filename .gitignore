@@ -1,8 +1,9 @@
 
 
-# Input/temp files
+# Input/temp/output files
 **/input
 **/temp
+**/output
 
 # File extensions
 *.dta
