@@ -41,6 +41,12 @@ label define incomenarrow 1 "Less than $24,000" 2 "$24,000 - $59,999"
 	3 "$60,000 - $119,999" 4 "$120,000 and over";
 label values incomenarrow incomenarrow;
 
+format 	INT_DATE 		%td;
+gen 	monthdate 		= mofd(INT_DATE);
+format 	monthdate 		%tm;
+rename 	MOTHERLODE_ID 	id;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE AND REMOVE TEMP FILES;
 

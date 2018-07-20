@@ -8,7 +8,8 @@ cap mkdir $basedir/build/temp;
 ////////////////////////////////////////////////////////////////////////////////
 
 local commonvars region sex married workcat hispanic income wgt
-		age year month nomoneyfoodpast12 state educ race children;
+		age year month nomoneyfoodpast12 state educ race children
+		INT_DATE MOTHERLODE_ID;
 		
 forvalues yr=2008(1)2017 {;
 	cd $basedir/build/input;

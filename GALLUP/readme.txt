@@ -1,0 +1,2 @@
+
+If adding a new variable from the dataset, make sure to add it to build/code/build1_cleanyears.do, either in local commonvars or local yearvars depending on whether it shows up in all years or only some.
