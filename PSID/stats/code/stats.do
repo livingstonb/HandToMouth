@@ -51,14 +51,10 @@ save PSIDh2m_yearly.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////
-* PAPER DEFINITION - PLOT;
+* PLOTS;
 
-* Plot h2m by age;
-cd $BaseDir/../code;
-* rename headage age;
-do plot_h2m_age.do;
-cd $BaseDir/stats/output;
-graph export PSID_h2m_age.png, replace;
+cd $BaseDir/stats/code;
+do stats_plots.do;
 
 
 ////////////////////////////////////////////////////////////////////////////////

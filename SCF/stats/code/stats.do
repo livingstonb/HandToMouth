@@ -58,7 +58,7 @@ restore;
 * PLOTS;
 
 * Plot h2m by age;
-cd $basedir/../code;
-do plot_h2m_age.do;
+cd $basedir/stats/code;
+do stats_plots.do;
 
 

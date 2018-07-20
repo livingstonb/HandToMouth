@@ -19,7 +19,7 @@ cd $basedir/build/code;
 do build.do;
 * Clean;
 cd $basedir/build/code;
-do missing.do;
+do build_missing.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Compute HtM statistics;
