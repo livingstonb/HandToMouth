@@ -1,9 +1,9 @@
 #delimit;
-clear*;
 set more 1;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
+
 
 graph bar h2m_majorpurchase h2m_affordneeds, over(incomenarrow)
 	legend(label(1 "Would not be able to make a major purchase right now")

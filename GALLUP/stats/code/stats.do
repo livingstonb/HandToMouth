@@ -24,10 +24,10 @@ gen h2m_affordneeds = .;
 replace h2m_affordneeds = 1 if affordneeds == 2;
 replace h2m_affordneeds = 0 if affordneeds == 1;
 
-collapse (mean) h2m_majorpurchase (mean) h2m_affordneeds [aw=wgt], by(incomenarrow);
 
+* collapse (mean) h2m_majorpurchase (mean) h2m_affordneeds [aw=wgt], by(incomenarrow);
 cd $basedir/stats/output;
-save h2mstat.dta, replace;
+* save h2mstat.dta, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
