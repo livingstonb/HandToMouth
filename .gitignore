@@ -1,0 +1,7 @@
+
+
+# Input files
+**/input
+
+# Stata .dta files
+*.dta
