@@ -29,22 +29,38 @@ restore;
 more than, or about equal to your household's income? Please do not include the 
 purchase of a new house or car, or other big investments you may have
 made. */;
-gen		h2m_spendinc = .;
-replace h2m_spendinc = 1 if inlist(spendinc,2,3); 	/* More than or equal to */;
-replace h2m_spendinc = 0 if spendinc == 1; 			/* Less than */
+gen		spendinc_h2m = .;
+replace spendinc_h2m = 1 if inlist(spendinc,2,3); 	/* More than or equal to */;
+replace spendinc_h2m = 0 if spendinc == 1; 			/* Less than */
 
 /* In a typical month, how difficult is it for you to cover your expenses and 
 pay all your bills? */;
-gen 	h2m_paybills = .;
-replace h2m_paybills = 1 if paybills == 1; /* Very difficult */;
-replace h2m_paybills = 0 if inlist(paybills,2,3); /* Somewhat/not at all diff */;
+gen 	paybills_h2m = .;
+replace paybills_h2m = 1 if paybills == 1; /* Very difficult */;
+replace paybills_h2m = 0 if inlist(paybills,2,3); /* Somewhat/not at all diff */;
 
 /* Have you set aside emergency or rainy day funds that would cover your expenses 
 for 3 months, in case of sickness, job loss, economic downturn, or other 
 emergencies? */;
-gen 	h2m_rainyday = .;
-replace h2m_rainyday = 1 if rainyday == 2;
-replace h2m_rainyday = 0 if rainyday == 1;
+gen 	rainyday_h2m = .;
+replace rainyday_h2m = 1 if rainyday == 2;
+replace rainyday_h2m = 0 if rainyday == 1;
+
+/* Households which do not have rainy day funds and could probably not or could
+not come up with $2000 */;
+gen		rainydayXget2000_h2m = .;
+replace rainydayXget2000_h2m = 1 if (rainyday_h2m==1) & (get2000bottom==1);
+replace rainydayXget2000_h2m = 0 if (rainyday_h2m==0) | (get2000bottom==0);
+
+////////////////////////////////////////////////////////////////////////////////
+* COMPUTE H2M;
+
+cd $basedir/../code;
+preserve;
+do yearly_h2m.do;
+cd $basedir/stats/output;
+save NFCS_h2mstat, replace;
+restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
