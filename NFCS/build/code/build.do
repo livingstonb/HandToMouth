@@ -45,7 +45,7 @@ label variable get2000probably 		"Could probably come up with $2000";
 label variable get2000probablynot 	"Could probably not come up with $2000";
 label variable get2000not 			"Could not come up with $2000";
 
-* Rename other variables;
+* Rename/generate other variables;
 rename 	wgt_n2 	weight;
 drop	wgt*;
 rename 	weight 	wgt;
@@ -54,6 +54,7 @@ rename 	j30		timediscount;
 rename	j5		rainyday;
 rename	j4		paybills;
 rename	j3		spendinc;
+gen		get2000
 
 * Label variables;
 label 	define	timediscountlab 1 "Next few months" 2 "Next year"
