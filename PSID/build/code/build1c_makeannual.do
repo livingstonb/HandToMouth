@@ -1,11 +1,11 @@
-cd $BaseDir
+cd $basedir
 clear
 set more off
 * cap log close
-* log using $BaseDir/create1c_makeannual, replace t
+* log using $basedir/create1c_makeannual, replace t
 
 /* Converts data to yearly */
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 u fam1a, clear
 
 foreach var of varlist *time {
@@ -61,5 +61,5 @@ gen ndur = food+fdel+fout+fstmp+gasoline+hlthinsurance+hlthservices+utility+ ///
 gen asset = hrentinc+hdividendinc+hinterestinc+htrustfund+hassbus+hassfarm+ ///
 		    wrentinc+wdividendinc+winterestinc+wtrustfund+wassbus+oassinc
 
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 save fam1b, replace

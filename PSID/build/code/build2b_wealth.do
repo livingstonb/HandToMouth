@@ -2,11 +2,11 @@
 clear*;
 set maxvar 30000;
 
-/* Appends surveys by year and performs basic data cleaning */;
+/* Appends wealth datasets by year and performs basic data cleaning */;
 
 ////////////////////////////////////////////////////////////////////////////////
-* APPEND BY year;
-cd $BaseDir/build/input;
+* APPEND BY YEAR;
+cd $basedir/build/input;
 use wlth1999/wlth1999.dta;
 gen year = 1999;
 forvalues yrind = 2001(2)2007 {;
@@ -87,9 +87,8 @@ replace networthnohomeequity = S416 if year == 1999;
 keep intid year checking othrealestate stocks vehic othassets ira homeequity 
 	networth networthnohomeequity othdebt;
 
-
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save PSID_wealth2.dta, replace;
 

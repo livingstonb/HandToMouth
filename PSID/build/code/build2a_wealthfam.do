@@ -3,11 +3,11 @@ clear*;
 set maxvar 30000;
 set more 1;
 
-/* Appends surveys by year and performs basic data cleaning */;
+/* Appends family datasets by year and performs basic data cleaning */;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 1999;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam1999er/fam1999er.dta, clear;
 gen year = 1999;
 
@@ -30,12 +30,12 @@ rename ER13019 famnum;
 rename ER15002 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam1999er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2001;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2001er/fam2001er.dta, clear;
 gen year = 2001;
 
@@ -58,12 +58,12 @@ rename ER17022 famnum;
 rename ER19198 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2001er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2003;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2003er/fam2003er.dta, clear;
 gen year = 2003;
 
@@ -86,12 +86,12 @@ rename ER21009 famnum;
 rename ER22563 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2003er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2005;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2005er/fam2005er.dta, clear;
 gen year = 2005;
 
@@ -114,12 +114,12 @@ rename ER25009 famnum;
 rename ER26544 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2005er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2007;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2007er/fam2007er.dta, clear;
 gen year = 2007;
 
@@ -142,12 +142,12 @@ rename ER36009 famnum;
 rename ER37562 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2007er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2009;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2009er/fam2009er.dta, clear;
 gen year = 2009;
 
@@ -186,12 +186,12 @@ rename ER46968 networthnohomeequity;
 rename ER43553 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2009er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2011;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2011er/fam2011er.dta, clear;
 gen year = 2011;
 
@@ -230,12 +230,12 @@ rename ER52392 networthnohomeequity;
 rename ER48878 bus;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2011er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2013;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2013er/fam2013er.dta, clear;
 gen year = 2013;
 
@@ -275,12 +275,12 @@ rename ER54625 bus;
 replace bus = bus - ER54629;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2013er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * 2015;
-cd $BaseDir/build/input;
+cd $basedir/build/input;
 use fam2015er/fam2015er.dta, clear;
 gen year = 2015;
 
@@ -320,7 +320,7 @@ rename ER61736 bus;
 replace bus = bus - ER61740;
 
 drop ER*;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save fam2015er_temp, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -332,14 +332,14 @@ local deflatevars	;
 
 ////////////////////////////////////////////////////////////////////////////////
 * APPEND YEARS;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 use fam1999er_temp, clear;
 forvalues yrind = 2001(2)2015 {;
 	append using fam`yrind'er_temp.dta;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-* SET SELECTED VARS TO ZERO/RENAME VARS;
+* CLEANING;
 replace othrealestatedebt 	= 0 if year <= 2011;
 replace ccdebt 				= 0 if year <= 2009;
 replace studentdebt 		= 0 if year <= 2009;
@@ -352,6 +352,6 @@ rename stateres state;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 save PSID_wealth1.dta, replace;
 

@@ -1,8 +1,8 @@
 #delimit;
 clear*;
-cd $BaseDir/build/output;
+cd $basedir/build/output;
 use PSID.dta;
-cap mkdir $BaseDir/stats/output;
+cap mkdir $basedir/stats/output;
 
 /*
 This file is where the user indicates how h2m will be computed. The file
@@ -39,36 +39,36 @@ gen con = ndur;
 * PAPER DEFINITION - COMPUTE;
 
 * Compute h2m statistics here;
-cd $BaseDir/../code;
+cd $basedir/../code;
 do compute_h2m.do;
 
 * Compute yearly averages;
 preserve;
-cd $BaseDir/../code;
+cd $basedir/../code;
 do yearly_h2m.do;
-cd $BaseDir/stats/output;
+cd $basedir/stats/output;
 save PSIDh2m_yearly.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
 
-cd $BaseDir/stats/code;
+cd $basedir/stats/code;
 do stats_plots.do;
 
 
 ////////////////////////////////////////////////////////////////////////////////
 * NON-DURABLE CONSUMPTION & H2M;
 * Compute h2m statistics here;
-cd $BaseDir/../code;
+cd $basedir/../code;
 do compute_h2m_consumption.do;
 
 * Compute yearly averages;
 preserve;
 global dataset PSID;
-cd $BaseDir/../code;
+cd $basedir/../code;
 do yearly_h2m.do;
-cd $BaseDir/stats/output;
+cd $basedir/stats/output;
 save PSIDh2m_yearly_consumption.dta, replace;
 restore;
 

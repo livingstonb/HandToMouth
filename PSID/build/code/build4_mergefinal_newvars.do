@@ -1,11 +1,14 @@
 #delimit;
 clear*;
 set maxvar 30000;
-cap mkdir $BaseDir/build/output;
+cap mkdir $basedir/build/output;
+
+/* Merge of dataset create in build1 with dataset from build3. This script
+also creates the relevant variables for HtM computations */;
 
 ////////////////////////////////////////////////////////////////////////////////
 * MERGE CONSUMPTION AND WEALTH DATA;
-cd $BaseDir/build/temp;
+cd $basedir/build/temp;
 use PSIDwealth.dta;
 
 merge 1:1 intid year using fam1c.dta, update;
@@ -58,5 +61,5 @@ replace agew		= . if agew			== 999;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
-cd $BaseDir/build/output;
+cd $basedir/build/output;
 save PSID.dta, replace;

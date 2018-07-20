@@ -1,4 +1,4 @@
-cd $BaseDir/build/
+cd $basedir/build/
 
 /* Top-codes the family dataset */
 
@@ -6,9 +6,9 @@ clear
 set more off
 set maxvar 20000
 * cap log close
-* log using $BaseDir/create1b_topcoding,replace t
+* log using $basedir/create1b_topcoding,replace t
 
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 u fam, clear
 
 *TOP-CODING - 998 - 999 VARIABLES
@@ -73,7 +73,7 @@ foreach var of varlist hlthdoctorbi hlthrxbi {
 	replace trunc = 1 if `var' == 9999997 | `var' == -999998 | `var' == 999997 | `var' == -99998
 	}
 
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 save fam1a, replace 
 
 

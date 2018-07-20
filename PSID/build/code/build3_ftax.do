@@ -1,12 +1,10 @@
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 clear
 set more off
-* cap log close
-* log using $BaseDir/create1c_makeannual, replace t
 
 /* Generates tax-relevant variables and runs taxsim9 */
 
-u fam1b, clear
+u fam1c, clear
 
 //Manual adjustment
 replace state=41 if year==2001&intid==6357
@@ -16,7 +14,7 @@ replace state=4 if year==2001&intid==7282
 cap drop ftaxid
 gen ftaxid = _n
 
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 save fam1b, replace
 
 // ASSUME ALL INCOME IS LABOR INCOME WHEN CALCULATING FTAX
@@ -47,31 +45,35 @@ gen swages = y*0.5
 gen depchild = kids
 
 // if having problems with taxsim, set taxsim = 0
-scalar taxsim = 0
+scalar taxsim = 1
 if taxsim == 1 {
 	taxsim9, replace
 
 	gen ftax = fiitax
+	gen stax = siitax
+	
 
-	keep ftaxid ftax
+	keep ftaxid ftax stax
 
 	sort ftaxid
 
 	save ftax, replace
+	save stax, replace
 
 	u fam1b, clear
 
 	sort ftaxid
 
-	merge ftaxid using ftax
+	merge 1:1 ftaxid using ftax
+	merge 1:1 ftaxid using stax, nogen
 	tab _merge
 	drop _merge ftaxid
 }
 else {
 	gen ftax = 0
+	gen stax = 0
 }
 
 sort intid year
-cd $BaseDir/build/temp
-save fam1c, replace
-* log close
+cd $basedir/build/temp
+save PSIDwealth, replace

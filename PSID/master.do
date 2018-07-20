@@ -1,36 +1,39 @@
 #delimit;
 clear*;
 set maxvar 30000;
+set more 1;
 
-global BaseDir /Users/Brian/Documents/GitHub/HtM/PSID ;
+/* This is the main do-file for computing hand-to-mouth statistics in the PSID.*/;
+
+global basedir /Users/Brian/Documents/GitHub/HandToMouth/PSID ;
 
 ////////////////////////////////////////////////////////////////////////////////
-* FAMILY DATA - CONSUMPTION;
-cd $BaseDir/build/code;
+* BUILD DIRECTORY;
+* Get consumption data from family dataset;
+cd ${basedir}/build/code;
 do build1a_readfam.do;
-cd $BaseDir/build/code;
+cd $basedir/build/code;
 do build1b_topcoding.do;
-cd $BaseDir/build/code;
+cd $basedir/build/code;
 do build1c_makeannual.do;
 
-////////////////////////////////////////////////////////////////////////////////
-* FAMILY AND WEALTH DATA - WEALTH;
-cd $BaseDir/build/code;
+* Get wealth data from family and wealth datasets;
+cd $basedir/build/code;
 do build2a_wealthfam.do;
-cd $BaseDir/build/code;
+cd $basedir/build/code;
 do build2b_wealth.do;
-cd $BaseDir/build/code;
+cd $basedir/build/code;
 do build2c_mergewealth.do;
-cd $BaseDir/build/code;
-do build2d_ftax.do;
+cd $basedir/build/code;
 
+* Run taxsim9;
+do build3_ftax.do;
+
+* Merge consumption and wealth datasets, create new variables;
+cd $basedir/build/code;
+do build4_mergefinal_newvars.do;
 
 ////////////////////////////////////////////////////////////////////////////////
-* MERGE CONSUMPTION AND WEALTH, CREATE NEW VARIABLES;
-cd $BaseDir/build/code;
-do build3_mergefinal_newvars.do;
-
-////////////////////////////////////////////////////////////////////////////////
-* STATS;
-cd $BaseDir/stats/code;
+* STATS DIRECTORY;
+cd $basedir/stats/code;
 do stats.do;

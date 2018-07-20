@@ -1,12 +1,12 @@
 ****EXTRACTS FROM THE FAMILY FILES THE VARIABLES OF INTEREST *****
-cap mkdir $BaseDir/build/temp
+cap mkdir $basedir/build/temp
 
-cd $BaseDir/build/input
+cd $basedir/build/input
 clear
 set more off
 set maxvar 20000
 * cap log close
-* log using $BaseDir/create1a_readfam.log,replace t
+* log using $basedir/create1a_readfam.log,replace t
 
 u fam1999er/fam1999er
 
@@ -155,7 +155,7 @@ drop ER*
 gen year = 1999
 compress
 sort intid
-save $BaseDir/build/temp/f99, replace
+save $basedir/build/temp/f99, replace
 
 u fam2001er/fam2001er
 
@@ -304,7 +304,7 @@ drop ER*
 gen year = 2001
 compress
 sort intid
-save $BaseDir/build/temp/f01, replace
+save $basedir/build/temp/f01, replace
 
 
 u fam2003er/fam2003er
@@ -457,7 +457,7 @@ drop ER*
 gen year = 2003
 compress
 sort intid
-save $BaseDir/build/temp/f03, replace
+save $basedir/build/temp/f03, replace
 
 u fam2005er/fam2005er
 
@@ -602,7 +602,7 @@ drop ER*
 gen year = 2005
 compress
 sort intid
-save $BaseDir/build/temp/f05, replace 
+save $basedir/build/temp/f05, replace 
 
 
 u fam2007er/fam2007er
@@ -750,7 +750,7 @@ drop ER*
 gen year = 2007
 compress
 sort intid
-save $BaseDir/build/temp/f07, replace 
+save $basedir/build/temp/f07, replace 
 
 
 u fam2009er/fam2009er
@@ -896,7 +896,7 @@ drop ER*
 gen year = 2009
 compress
 sort intid
-save $BaseDir/build/temp/f09, replace
+save $basedir/build/temp/f09, replace
 
 
 u fam2011er/fam2011er
@@ -1043,7 +1043,7 @@ drop ER*
 gen year = 2011
 compress
 sort intid
-save $BaseDir/build/temp/f11, replace
+save $basedir/build/temp/f11, replace
 
 u fam2013er/fam2013er
 
@@ -1073,7 +1073,7 @@ drop ER*
 gen year = 2013
 compress
 sort intid
-save $BaseDir/build/temp/f13, replace
+save $basedir/build/temp/f13, replace
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1105,9 +1105,9 @@ drop ER*
 gen year = 2015
 compress
 sort intid
-save $BaseDir/build/temp/f15, replace
+save $basedir/build/temp/f15, replace
 
-cd $BaseDir/build/temp
+cd $basedir/build/temp
 use f99, clear
 append using f01
 append using f03
@@ -1117,6 +1117,7 @@ append using f09
 append using f11
 append using f13
 append using f15
+save fam, replace
 
 
 erase f99.dta
