@@ -56,8 +56,13 @@ replace	spendinc_h2m = 0 if spendinc == 1;
 gen 	emerg_h2m 	= (emerg_wouldnt==1);
 replace emerg_h2m 	= . if (emerg_refused == 1) | (emerg_wouldnt==.);
 
-collapse (mean) paybills_h2m paybills400_h2m ccmin_h2m havemoney_h2m emerg_h2m
-	 rainyday_h2m coverexpenses_h2m spendinc_h2m [aw=wgt], by(year);
+////////////////////////////////////////////////////////////////////////////////
+* COMPUTE H2M BY YEAR;
+
+preserve;
+do ${basedir}/../code/yearly_h2m.do;
+save ${basedir}/stats/output/SHED_h2mstat, replace;
+restore;
 
 ///////////////////////////////////////////////////////////////////////////////
 * Save h2mstat;
