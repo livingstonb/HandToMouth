@@ -3,6 +3,7 @@ set more 1;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
+* Bar char split by income;
 preserve;
 graph bar get2000not get2000probablynot get2000probably get2000certain [aw=wgt],
 	stack over(year)
@@ -18,3 +19,5 @@ graph bar get2000not get2000probablynot get2000probably get2000certain [aw=wgt],
 restore;
 cd $basedir/stats/output;
 graph export NFCS_h2m_bar.png, replace;
+
+* Bar char split by impatience;

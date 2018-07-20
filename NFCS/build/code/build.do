@@ -2,6 +2,7 @@
 set more 1;
 clear*;
 cap mkdir $basedir/build/output;
+cap mkdir $basedir/build/temp;
 
 /* This script cleans the NFCS data and saves NFCS.dta to build/output */;
 
@@ -9,8 +10,16 @@ cap mkdir $basedir/build/output;
 * CLEAN DATA;
 cd $basedir/build/input;
 insheet using NFCS2015.csv, comma;
+gen year = 2015;
+cd $basedir/build/temp;
+save NFCS2015, replace;
+cd $basedir/build/input;
+insheet using NFCS2012.csv, clear comma;
+gen year = 2012;
+cd $basedir/build/temp;
+append using NFCS2015;
 
-destring j20, gen(get2000);
+rename j20 get2000;
 
 label define confidence2000 
 	1 "Certain could come up with $2000"
@@ -40,9 +49,12 @@ label variable get2000probably 		"Could probably come up with $2000";
 label variable get2000probablynot 	"Could probably not come up with $2000";
 label variable get2000not 			"Could not come up with $2000";
 
-rename wgt_n2 	wgt;
-rename a3ar_w 	agegrp;
-rename track 	year;
+* Rename other variables;
+rename 	wgt_n2 	weight;
+drop	wgt*;
+rename 	weight wgt;
+rename 	a3ar_w 	agegrp;
+rename 	j30		timediscount;
 
 
 ////////////////////////////////////////////////////////////////////////////////
