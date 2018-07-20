@@ -3,5 +3,6 @@
 # Input files
 **/input
 
-# Stata .dta files
+# File extensions
 *.dta
+*.DS_Store
