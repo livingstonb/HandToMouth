@@ -7,7 +7,7 @@ set more 1;
 * PLOTS;
 * Bar char grouped by income;
 preserve;
-graph bar get2000not get2000probablynot get2000probably get2000certain [aw=wgt],
+graph bar get2000not get2000probablynot get2000probably get2000certain if year > 2009 [aw=wgt],
 	stack over(year)
 	legend(label(1 "Could not come up with $2000") 
 	label(2 "Could probably not come up with $2000") 

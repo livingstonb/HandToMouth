@@ -11,7 +11,6 @@ use NFCS.dta;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
-drop if year == 2009;
 drop if inlist(agegrp,1,6); /* Use ages 25-64 */;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +50,7 @@ not come up with $2000 */;
 gen		rainydayXget2000_h2m = .;
 replace rainydayXget2000_h2m = 1 if (rainyday_h2m==1) & (get2000bottom==1);
 replace rainydayXget2000_h2m = 0 if (rainyday_h2m==0) | (get2000bottom==0);
+replace rainydayXget2000_h2m = . if year == 2009;
 
 ////////////////////////////////////////////////////////////////////////////////
 * COMPUTE H2M BY YEAR;

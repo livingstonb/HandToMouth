@@ -8,12 +8,18 @@ cap mkdir $basedir/build/temp;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CLEAN DATA;
-insheet using ${basedir}/build/input/NFCS2015.csv, comma;
+insheet using ${basedir}/build/input/NFCS2012.csv, comma;
+gen year = 2012;
+save ${basedir}/build/temp/NFCS2012_temp, replace;
+
+insheet using ${basedir}/build/input/NFCS2015.csv, clear comma;
 gen year = 2015;
 save ${basedir}/build/temp/NFCS2015_temp, replace;
-insheet using ${basedir}/build/input/NFCS2012.csv, clear comma;
-gen year = 2012;
+
+insheet using ${basedir}/build/input/NFCS2009.csv, clear comma;
+gen year = 2009;
 append using ${basedir}/build/temp/NFCS2015_temp;
+append using ${basedir}/build/temp/NFCS2012_temp;
 
 rename j20 get2000;
 
