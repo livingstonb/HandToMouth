@@ -1,9 +1,11 @@
 #delimit;
 set more 1;
 
+/* This do-file makes plots from NFCS data when called by stats.do */;
+
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
-* Bar char split by income;
+* Bar char grouped by income;
 preserve;
 graph bar get2000not get2000probablynot get2000probably get2000certain [aw=wgt],
 	stack over(year)
@@ -21,7 +23,7 @@ cd $basedir/stats/output;
 graph export NFCS_h2m_barincome.png, replace;
 
 
-* Bar char split by impatience;
+* Bar char grouped by impatience;
 preserve;
 graph bar get2000bottom get2000top [aw=wgt],
 	stack 

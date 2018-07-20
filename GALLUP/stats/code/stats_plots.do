@@ -1,6 +1,8 @@
 #delimit;
 set more 1;
 
+/* This do-file produces plots for GALLUP US Daily when called by stats.do */;
+
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
 

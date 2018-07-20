@@ -1,20 +1,17 @@
 #delimit;
 
-/* This is the main script associated with the NFCS data. Written by Brian
+/* This is the main do-file associated with the NFCS data. Code written by Brian
 Livingston */;
 
 ////////////////////////////////////////////////////////////////////////////////
-* HOUSEKEEPING;
 clear*;
 set more 1;
 global basedir /Users/Brian/Documents/GitHub/HandToMouth/NFCS;
 
 ////////////////////////////////////////////////////////////////////////////////
-* BUILD;
-cd $basedir/build/code;
-do build.do;
+* BUILD DIRECTORY;
+do ${basedir}/build/code/build.do;
 
 ////////////////////////////////////////////////////////////////////////////////
-* STATS;
-cd $basedir/stats/code;
-do stats.do;
+* STATS DIRECTORY;
+do ${basedir}/stats/code/stats.do;

@@ -1,5 +1,7 @@
 #delimit;
 
+/* This do-file appends years and performs data cleaning */;
+
 ////////////////////////////////////////////////////////////////////////////////
 clear*;
 set more 1;
@@ -32,7 +34,7 @@ replace age					= . if age == 100;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CREATE NEW VARIABLES;
-gen incomenarrow = 1 if inlist(income,1,2,3,4);
+gen incomenarrow 	 = 1 if inlist(income,1,2,3,4);
 replace incomenarrow = 2 if inlist(income,5,6,7);
 replace incomenarrow = 3 if inlist(income,8,9);
 replace incomenarrow = 4 if inlist(income,10);

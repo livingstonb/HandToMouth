@@ -4,20 +4,16 @@ clear*;
 cap mkdir $basedir/build/output;
 cap mkdir $basedir/build/temp;
 
-/* This script cleans the NFCS data and saves NFCS.dta to build/output */;
+/* This do-file cleans the NFCS data and saves NFCS.dta to build/output */;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CLEAN DATA;
-cd $basedir/build/input;
-insheet using NFCS2015.csv, comma;
+insheet using ${basedir}/build/input/NFCS2015.csv, comma;
 gen year = 2015;
-cd $basedir/build/temp;
-save NFCS2015, replace;
-cd $basedir/build/input;
-insheet using NFCS2012.csv, clear comma;
+save ${basedir}/build/temp/NFCS2015_temp, replace;
+insheet using ${basedir}/build/input/NFCS2012.csv, clear comma;
 gen year = 2012;
-cd $basedir/build/temp;
-append using NFCS2015;
+append using ${basedir}/build/temp/NFCS2015_temp;
 
 rename j20 get2000;
 
@@ -29,8 +25,6 @@ label define confidence2000
 	98 "Don't know" 
 	99 "Prefer not to say";
 label values get2000 confidence2000;
-
-
 
 * Create dummies;
 gen 	get2000certain 		= get2000 == 1;
@@ -54,7 +48,6 @@ rename 	j30		timediscount;
 rename	j5		rainyday;
 rename	j4		paybills;
 rename	j3		spendinc;
-gen		get2000
 
 * Label variables;
 label 	define	timediscountlab 1 "Next few months" 2 "Next year"
@@ -74,5 +67,4 @@ foreach missvar of varlist get2000* {;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
-cd $basedir/build/output;
-save NFCS.dta, replace;
+save ${basedir}/build/output/NFCS.dta, replace;

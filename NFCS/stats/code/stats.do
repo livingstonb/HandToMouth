@@ -11,17 +11,17 @@ use NFCS.dta;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
-
 drop if year == 2009;
 drop if inlist(agegrp,1,6); /* Use ages 25-64 */;
 
 ////////////////////////////////////////////////////////////////////////////////
+* STATISTICS;
+
 * Financial fragility;
 preserve;
 collapse (mean) get2000certain (mean) get2000probably (mean) get2000probablynot
 	(mean) get2000not [aw=wgt], by(year);
-cd $basedir/stats/output;
-save NFCS_get2000.dta, replace;
+save ${basedir}/stats/output/NFCS_get2000.dta, replace;
 restore;
 
 * H2m stats;
@@ -53,16 +53,13 @@ replace rainydayXget2000_h2m = 1 if (rainyday_h2m==1) & (get2000bottom==1);
 replace rainydayXget2000_h2m = 0 if (rainyday_h2m==0) | (get2000bottom==0);
 
 ////////////////////////////////////////////////////////////////////////////////
-* COMPUTE H2M;
+* COMPUTE H2M BY YEAR;
 
-cd $basedir/../code;
 preserve;
-do yearly_h2m.do;
-cd $basedir/stats/output;
-save NFCS_h2mstat, replace;
+do ${basedir}/../code/yearly_h2m.do;
+save ${basedir}/stats/output/NFCS_h2mstat, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
-cd $basedir/stats/code;
-do stats_plots.do;
+do ${basedir}/stats/code/stats_plots.do;

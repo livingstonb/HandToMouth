@@ -2,8 +2,7 @@
 clear*;
 set maxvar 30000;
 
-* global BaseDir /Users/brianlivingston/Documents/GitHub/HtM/PSID ;
-global BaseDir /Users/Brian/Desktop/HtM/PSID ;
+global BaseDir /Users/Brian/Documents/GitHub/HtM/PSID ;
 
 ////////////////////////////////////////////////////////////////////////////////
 * FAMILY DATA - CONSUMPTION;

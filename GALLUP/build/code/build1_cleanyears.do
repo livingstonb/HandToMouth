@@ -1,12 +1,16 @@
 #delimit;
 
+/* This do-file selects which variables to keep from each of the year datasets,
+then resaves the datasets in build/temp */;
+
 ////////////////////////////////////////////////////////////////////////////////
 clear*;
 set more 1;
 cap mkdir $basedir/build/temp;
 
 ////////////////////////////////////////////////////////////////////////////////
-
+* SELECT WHICH VARIABLES TO KEEP;
+* Variables shared among all years;
 local commonvars region sex married workcat hispanic income wgt
 		age year month nomoneyfoodpast12 state educ race children
 		INT_DATE MOTHERLODE_ID;
@@ -31,6 +35,7 @@ forvalues yr=2008(1)2017 {;
 	rename RACE				race;
 	rename H17				children;
 	
+	* Variables unique to this year;
 	local yearvars ;
 	if `yr'>=2009 {;
 		rename M92			majorpurchase;
@@ -45,8 +50,6 @@ forvalues yr=2008(1)2017 {;
 		local yearvars `yearvars' moneyforeverything;
 	};
 	
-	* Variable Selection
-	local `yearvars';
 	keep `commonvars' `yearvars';
 	
 	cd $basedir/build/temp;
