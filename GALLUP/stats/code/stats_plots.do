@@ -10,6 +10,8 @@ set more 1;
 graph bar h2m_majorpurchase h2m_affordneeds [aw=wgt], over(incomenarrow)
 	legend(label(1 "Would not be able to make a major purchase right now")
 		label(2 "Cannot afford to buy the things I need") cols(1))
+	intensity(*0.9)
+	lintensity(*0.9)
 	graphregion(color(white));
 		   
 cd $basedir/stats/output;

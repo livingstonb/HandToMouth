@@ -15,8 +15,8 @@ graph bar get2000not get2000probablynot get2000probably get2000certain if year >
 	label(4 "Could certainly come up with $2000"))
 	legend(cols(1))
 	legend(order(4 3 2 1))
-	intensity(*0.5)
-	lintensity(*0.5)
+	intensity(*0.9)
+	lintensity(*0.9)
 	graphregion(color(white));
 restore;
 cd $basedir/stats/output;
@@ -32,8 +32,8 @@ graph bar get2000bottom get2000top [aw=wgt],
 	label(2 "Could probably or certainly come up with $2000"))
 	legend(cols(1))
 	legend(order(4 3 2 1))
-	intensity(*0.7)
-	lintensity(*0.7)
+	intensity(*0.9)
+	lintensity(*0.9)
 	graphregion(color(white));
 restore;
 cd $basedir/stats/output;
