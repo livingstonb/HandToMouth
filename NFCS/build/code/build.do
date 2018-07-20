@@ -28,10 +28,17 @@ gen 	get2000certain 		= get2000 == 1;
 gen 	get2000probably 	= get2000 == 2;
 gen 	get2000probablynot 	= get2000 == 3;
 gen 	get2000not 			= get2000 == 4;
+gen		get2000bottom		= inlist(get2000,3,4);
 replace get2000certain 		= . if get2000 == .;
 replace get2000probably 	= . if get2000 == .;
 replace get2000probablynot 	= . if get2000 == .;
 replace get2000not 			= . if get2000 == .;
+replace get2000bottom		= . if get2000 == .;
+
+label variable get2000certain 		"Could certainly come up with $2000";
+label variable get2000probably 		"Could probably come up with $2000";
+label variable get2000probablynot 	"Could probably not come up with $2000";
+label variable get2000not 			"Could not come up with $2000";
 
 rename wgt_n2 	wgt;
 rename a3ar_w 	agegrp;

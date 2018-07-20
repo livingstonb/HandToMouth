@@ -7,7 +7,7 @@ Livingston */;
 * HOUSEKEEPING;
 clear*;
 set more 1;
-global basedir /Users/brianlivingston/Documents/GitHub/HtM/NFCS;
+global basedir /Users/Brian/Documents/GitHub/HandToMouth/NFCS;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD;
