@@ -1,6 +1,7 @@
 #delimit;
 clear*;
 set maxvar 30000;
+cap mkdir $BaseDir/build/output;
 
 ////////////////////////////////////////////////////////////////////////////////
 * MERGE CONSUMPTION AND WEALTH DATA;

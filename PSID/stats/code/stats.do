@@ -2,6 +2,7 @@
 clear*;
 cd $BaseDir/build/output;
 use PSID.dta;
+cap mkdir $BaseDir/stats/output;
 
 /*
 This file is where the user indicates how h2m will be computed. The file

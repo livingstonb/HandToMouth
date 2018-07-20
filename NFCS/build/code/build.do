@@ -1,6 +1,7 @@
 #delimit;
 set more 1;
 clear*;
+cap mkdir $basedir/build/output;
 
 /* This script cleans the NFCS data and saves NFCS.dta to build/output */;
 

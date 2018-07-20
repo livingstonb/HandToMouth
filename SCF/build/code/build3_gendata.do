@@ -1,4 +1,5 @@
 clear
+cap mkdir ${basedir}/build/output
 
 // this file generates all of the different definitions for the robustness checks
 

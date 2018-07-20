@@ -1,6 +1,7 @@
 #delimit;
 clear*;
 set more 1;
+cap mkdir $basedir/stats/output;
 
 /* Computes statistics from NFCS */;
 

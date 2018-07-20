@@ -1,5 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////
 #delimit;
+cap mkdir $basedir/stats/output;
+
 cd $basedir/build/output;
 use SCF_89_16_cleaned.dta, clear;
 

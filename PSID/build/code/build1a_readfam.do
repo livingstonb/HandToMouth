@@ -1,4 +1,5 @@
 ****EXTRACTS FROM THE FAMILY FILES THE VARIABLES OF INTEREST *****
+cap mkdir $BaseDir/build/temp
 
 cd $BaseDir/build/input
 clear

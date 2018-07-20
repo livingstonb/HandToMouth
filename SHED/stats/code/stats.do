@@ -1,6 +1,7 @@
 #delimit;
 clear*;
 set more 1;
+cap mkdir $basedir/stats/output;
 
 /*
 This file is where the user indicates which statistics will be computed.

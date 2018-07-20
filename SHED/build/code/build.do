@@ -1,6 +1,7 @@
 #delimit;
 clear;
 set more 1;
+cap mkdir $basedir/build/temp;
 
 /* Builds the SHED.dta dataset for computing hand-to-mouth statistics.
 SHEDXXXX.dta datasets must be placed in SHED/build/input */;
