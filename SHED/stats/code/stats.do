@@ -64,8 +64,3 @@ do ${basedir}/../code/yearly_h2m.do;
 save ${basedir}/stats/output/SHED_h2mstat, replace;
 restore;
 
-///////////////////////////////////////////////////////////////////////////////
-* Save h2mstat;
-cd $basedir/stats/output;
-save h2mstat.dta, replace;
-

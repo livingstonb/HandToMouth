@@ -25,5 +25,5 @@ twoway line h2m_majorpurchase monthdate,
 	graphregion(color(white));
 
 cd $basedir/stats/output;
-graph export GALLUP_majorpurchase.png, replace;
+graph export GALLUPmajorpurchase.png, replace;
 restore;

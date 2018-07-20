@@ -31,7 +31,7 @@ replace h2m_affordneeds = 0 if affordneeds == 1;
 preserve;
 collapse (mean) h2m* [aw=wgt];
 cd $basedir/stats/output;
-save h2mstat.dta, replace;
+save GALLUP_h2mstat.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////

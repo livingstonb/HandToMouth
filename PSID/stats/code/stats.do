@@ -47,7 +47,7 @@ preserve;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save PSIDh2m_yearly.dta, replace;
+save PSID_h2mstat.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ global dataset PSID;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save PSIDh2m_yearly_consumption.dta, replace;
+save PSIDh2m_h2mstat_consumption.dta, replace;
 restore;
 
 
