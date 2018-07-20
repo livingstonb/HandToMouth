@@ -1,6 +1,7 @@
 #delimit;
 cap drop h2m Wh2m Ph2m NWh2m;
 
+/* Computes hand-to-mouth statistics based on c >= y and liqvar <= 0 */;
 
 ////////////////////////////////////////////////////////////////////////////////
 * NON-DURABLE CONSUMPTION & H2M;

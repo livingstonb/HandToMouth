@@ -1,7 +1,11 @@
 #delimit;
 
 /*
-This file computes h2m, Wh2m, and Ph2m */;
+Based on the timing model used in Kaplan et al. (2014), this file computes h2m, 
+Wh2m, Ph2m, and NWh2, given the following variables:
+incvar, liqvar, illiqvar, nwvar, payfreq, clim,
+and optionally maxcredit, committed_cons
+ */;
 
 gen h2m 	= 0;
 gen Wh2m 	= 0;
@@ -85,6 +89,5 @@ replace Wh2m 	= . if h2m==.;
 replace Ph2m 	= . if h2m==.;
 replace NWh2m 	= . if (nwvar==.|monthincome==.);
 
-drop monthincome;
-drop creditlim;
+drop monthincome creditlim;
 

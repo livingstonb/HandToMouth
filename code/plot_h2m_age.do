@@ -1,4 +1,7 @@
 #delimit;
+
+/* This do-file plots Wh2m and Ph2m vs age */;
+
 preserve;
 collapse (mean) h2m (mean) Wh2m (mean) Ph2m (mean) NWh2m [aw=wgt], by(age);
 sort age;
