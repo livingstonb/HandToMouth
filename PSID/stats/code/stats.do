@@ -44,6 +44,7 @@ do compute_h2m.do;
 
 * Compute yearly averages;
 preserve;
+global dataset PSID;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;

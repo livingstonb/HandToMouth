@@ -49,6 +49,7 @@ do compute_h2m.do;
 
 * Average h2m by year;
 preserve;
+global dataset SCF;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
