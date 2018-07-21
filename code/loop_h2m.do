@@ -46,9 +46,14 @@ forvalues spec=1(1)5 {;
 	do compute_h2m.do;
 	if strmatch("$dataset","SCF")==1 {;
 		* Take mean for each imputation separately;
-		quietly mean `h2ms' [aw=wgt], over(im0100);
+		preserve;
+		collapse (mean) `h2ms' [aw=wgt], by(im0100);
+		quietly mean `h2ms';
+		restore;
 	};
-	quietly mean `h2ms' [aw=wgt];
+	else {;
+		quietly mean `h2ms' [aw=wgt];
+	};
 	matrix coeffs = e(b);
 
 	* Store in matrix;
