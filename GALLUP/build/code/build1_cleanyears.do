@@ -52,6 +52,10 @@ forvalues yr=2008(1)2017 {;
 	
 	keep `commonvars' `yearvars';
 	
+	/* Normalize weights since sums are dramatically different depending on year */;
+	egen wgtsum = sum(wgt);
+	replace wgt = wgt/wgtsum;
+	
 	cd $basedir/build/temp;
 	save US_DAILY_`yr'_DATA_cleaned, replace;
 	clear;

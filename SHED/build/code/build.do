@@ -23,6 +23,9 @@ replace year = 2017 if year == .;
 rename weight3b wgt;
 replace wgt = weight3 if year == 2014;
 replace wgt = weight if year == 2013;
+/* Normalize weights since sums are dramatically different depending on year */;
+bysort year: egen wgtsum = sum(wgt);
+replace wgt = wgt/wgtsum;
 ////////////////////////////////////////////////////////////////////////////////
 * RENAME VARIABLES;
 * Make sure to add any new variables to missing.do to clean missing values!;

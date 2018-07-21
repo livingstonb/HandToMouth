@@ -45,6 +45,7 @@ replace rainyday_h2m = 0 if rainyday==1;
 gen 	coverexpenses_h2m = .;
 replace coverexpenses_h2m = 1 if coverexpenses==0;
 replace coverexpenses_h2m = 0 if coverexpenses==1;
+replace coverexpenses_h2m = . if year == 2013; /* outlier */;
 
 /* In the past month, would you say that your (and your spouse's/and your
 partner's income) was...  */;

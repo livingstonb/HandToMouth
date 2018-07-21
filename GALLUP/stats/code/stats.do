@@ -29,7 +29,8 @@ replace h2m_affordneeds = 0 if affordneeds == 1;
 
 * Save mean h2m statistics;
 preserve;
-collapse (mean) h2m* [aw=wgt];
+collapse (mean) h2m* [aw=wgt], by(year);
+collapse (mean) h2m*;
 cd $basedir/stats/output;
 save GALLUP_h2mstat.dta, replace;
 restore;
