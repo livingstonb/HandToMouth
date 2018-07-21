@@ -10,8 +10,10 @@ cd $basedir/build/output;
 use GALLUP.dta;
 
 ////////////////////////////////////////////////////////////////////////////////
-* SAMPLE SELECTION;
+* SAMPLE/WEIGHT SELECTION;
 keep if (age >= 25) | (age <= 79);
+
+rename MSAwgt wgt;
 
 ////////////////////////////////////////////////////////////////////////////////
 * QUESTIONS/H2M DEFINITIONS;
@@ -29,8 +31,7 @@ replace h2m_affordneeds = 0 if affordneeds == 1;
 
 * Save mean h2m statistics;
 preserve;
-collapse (mean) h2m* [aw=wgt], by(year);
-collapse (mean) h2m*;
+collapse (mean) h2m* [aw=wgt];
 cd $basedir/stats/output;
 save GALLUP_h2mstat.dta, replace;
 restore;

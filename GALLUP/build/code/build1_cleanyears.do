@@ -11,7 +11,7 @@ cap mkdir $basedir/build/temp;
 ////////////////////////////////////////////////////////////////////////////////
 * SELECT WHICH VARIABLES TO KEEP;
 * Variables shared among all years;
-local commonvars region sex married workcat hispanic income wgt
+local commonvars region sex married workcat hispanic income dailywgt MSAwgt
 		age year month nomoneyfoodpast12 state educ race children
 		INT_DATE MOTHERLODE_ID;
 		
@@ -25,7 +25,8 @@ forvalues yr=2008(1)2017 {;
 	rename WP1225			workcat;
 	rename D5				hispanic;
 	rename INCOME_SUMMARY	income;
-	rename PE_WEIGHT 		wgt;
+	rename PE_WEIGHT 		dailywgt;
+	rename PE_MSAWTS		MSAwgt;
 	rename WP1220			age;
 	rename YEAR				year;
 	rename MONTH			month;
@@ -51,10 +52,6 @@ forvalues yr=2008(1)2017 {;
 	};
 	
 	keep `commonvars' `yearvars';
-	
-	/* Normalize weights since sums are dramatically different depending on year */;
-	egen wgtsum = sum(wgt);
-	replace wgt = wgt/wgtsum;
 	
 	cd $basedir/build/temp;
 	save US_DAILY_`yr'_DATA_cleaned, replace;

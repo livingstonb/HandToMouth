@@ -49,6 +49,10 @@ format 	monthdate 		%tm;
 rename 	MOTHERLODE_ID 	id;
 
 
+/* Normalize weights since sums are dramatically different depending on year */;
+bysort INT_DATE: egen dwgtsum = sum(dailywgt);
+replace dailywgt = dailywgt/dwgtsum;
+
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE AND REMOVE TEMP FILES;
 

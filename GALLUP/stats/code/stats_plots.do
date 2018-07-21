@@ -19,10 +19,26 @@ graph export GALLUPbar.png, replace;
 
 * Time plot of majorpurchase;
 preserve;
-collapse (mean) h2m_majorpurchase [aw=wgt], by(monthdate);
-twoway line h2m_majorpurchase monthdate,
-	xtitle("Month") ytitle("Fraction unable to make a major purchase")
-	graphregion(color(white));
+gen timeindex = dofm(monthdate);
+gen firstdate = date("07/01/2009","MDY");
+gen lastdate = date("12/01/2017", "MDY");
+keep if (timeindex >= firstdate) & (timeindex < lastdate); 
+
+collapse (mean) h2m_majorpurchase h2m_affordneeds [aw=dailywgt], by(monthdate);
+
+local X ;
+forvalues i = 2009(2)2017 {;
+	local x = tm(`i'm1);
+	local X `X' `x';
+};
+twoway line h2m_affordneeds h2m_majorpurchase monthdate,
+	xtitle("Period") ytitle("Unable to make a major purchase")
+	graphregion(color(white))
+	tscale(range(`X'))
+	tlabel(`X')
+	legend(label(1 "Unable to afford the things I need")
+	label(2 "Unable to make a major purchase right now"))
+	legend(cols(1));
 
 cd $basedir/stats/output;
 graph export GALLUPmajorpurchase.png, replace;
