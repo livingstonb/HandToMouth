@@ -81,9 +81,11 @@ cd $basedir/stats/output;
 graph export PSID_h2m_year20112015.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
-* SHOW BASELINE RESULTS IN COMMAND WINDOW;
+* SHOW RESULTS IN COMMAND WINDOW;
+* Baseline;
 cd ${basedir}/stats/output;
 use PSID_h2mstat.dta, clear;
 li, clean noobs;
 
+* Robustness checks;
 matrix list H2M;
