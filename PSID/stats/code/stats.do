@@ -55,29 +55,30 @@ cd $basedir/stats/output;
 save PSID_h2mstat.dta, replace;
 restore;
 
-////////////////////////////////////////////////////////////////////////////////
-* PLOTS;
-
+* Plots;
 cd $basedir/stats/code;
 do stats_plots.do;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-* NON-DURABLE CONSUMPTION & H2M;
-scalar h2m_consumption = 0;
-if h2m_consumption==1 {;
-	* Compute h2m statistics here;
-	cd $basedir/../code;
-	do compute_h2m_consumption.do;
+* CCDEBT AS LIQDEBT - COMPUTE H2M BY YEAR FOR 2011-2015;
 
-	* Compute yearly averages;
-	preserve;
-	cd $basedir/../code;
-	do yearly_h2m.do;
-	cd $basedir/stats/output;
-	save PSIDh2m_h2mstat_consumption.dta, replace;
-	restore;
-};
+* Drop earlier years;
+drop if year < 2011;
+* Set liqvar to ccdebt;
+cap drop liqvar;
+gen liqvar = checking + stocks - ccdebt;
+
+* Compute h2m statistics here;
+drop *h2m;
+cd $basedir/../code;
+do compute_h2m.do;
+
+* Plot h2m by year;
+cd $basedir/../code;
+do plot_h2m_year.do;
+cd $basedir/stats/output;
+graph export PSID_h2m_year20112015.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
