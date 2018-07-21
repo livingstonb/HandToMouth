@@ -33,13 +33,13 @@ global 	borrowlimtype0 normal;
 global 	h2mtype0 normal;
 * Select consumption variable;
 gen 	con0 		= ndur;
+* Declare the dataset;
+global dataset PSID;
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do);
 do ${basedir}/../code/loop_h2m.do;
 
-set trace on;
-set tracedepth 1;
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
 
@@ -49,7 +49,6 @@ do compute_h2m.do;
 
 * Compute yearly averages;
 preserve;
-global dataset PSID;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
@@ -73,7 +72,6 @@ if h2m_consumption==1 {;
 
 	* Compute yearly averages;
 	preserve;
-	global dataset PSID;
 	cd $basedir/../code;
 	do yearly_h2m.do;
 	cd $basedir/stats/output;

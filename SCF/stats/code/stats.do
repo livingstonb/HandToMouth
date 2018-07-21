@@ -40,6 +40,8 @@ global borrowlimtype0 normal;
 global h2mtype0 normal;
 * Select consumption variable;
 gen 	con0 		= .;
+* Declare the dataset;
+global dataset SCF;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,13 +53,11 @@ do ${basedir}/../code/loop_h2m.do;
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
 
 * Compute h2m statistics here;
-global dataset SCF;
 cd $basedir/../code;
 do compute_h2m.do;
 
 * Average h2m by year;
 preserve;
-global dataset SCF;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;

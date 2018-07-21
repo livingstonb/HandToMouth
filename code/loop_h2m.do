@@ -44,6 +44,10 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
+	if strmatch("$dataset","SCF")==1 {;
+		* Take mean for each imputation separately;
+		quietly mean `h2ms' [aw=wgt], over(im0100);
+	};
 	quietly mean `h2ms' [aw=wgt];
 	matrix coeffs = e(b);
 
