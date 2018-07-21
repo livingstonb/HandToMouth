@@ -10,7 +10,7 @@ cd $basedir/build/temp;
 use SHED_temp.dta;
 
 local codevars havemoney mortpmt savaut ccmin behindstudpmts
-	rettrack retsavings borrowret inccat billstruggle spendinc 
+	retsavings borrowret inccat billstruggle spendinc 
 	retired educ studdebt rainyday coverexpenses paybills paybills400 
 	delinq_rentmort delinq_cc delinq_util
 	delinq_phonecable delinq_car delinq_studloan delinq_other skip_rentmort 
