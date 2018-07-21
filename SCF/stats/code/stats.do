@@ -45,9 +45,8 @@ global dataset SCF;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-* LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do);
+* LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do), STORE RESULTS AS MATRIX;
 do ${basedir}/../code/loop_h2m.do;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
@@ -73,10 +72,12 @@ do stats_plots.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
+* Baseline;
 cd ${basedir}/stats/output;
 use SCFh2m_yearly.dta, clear;
 li, clean noobs;
 
+* Robustness checks;
 matrix list H2M;
 
 

@@ -70,7 +70,7 @@ cap drop liqvar;
 gen liqvar = checking + stocks - ccdebt;
 
 * Compute h2m statistics here;
-drop *h2m;
+cap drop *h2m;
 cd $basedir/../code;
 do compute_h2m.do;
 
@@ -81,7 +81,7 @@ cd $basedir/stats/output;
 graph export PSID_h2m_year20112015.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
-* SHOW RESULTS IN COMMAND WINDOW;
+* SHOW BASELINE RESULTS IN COMMAND WINDOW;
 cd ${basedir}/stats/output;
 use PSID_h2mstat.dta, clear;
 li, clean noobs;
