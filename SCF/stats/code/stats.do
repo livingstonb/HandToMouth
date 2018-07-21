@@ -71,4 +71,12 @@ restore;
 cd $basedir/stats/code;
 do stats_plots.do;
 
+////////////////////////////////////////////////////////////////////////////////
+* SHOW RESULTS IN COMMAND WINDOW;
+cd ${basedir}/stats/output;
+use SCFh2m_yearly.dta, clear;
+li, clean noobs;
+
+matrix list H2M;
+
 

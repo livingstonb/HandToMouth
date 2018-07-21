@@ -1,4 +1,5 @@
 #delimit;
+clear*;
 set more 1;
 cap mkdir $basedir/stats/output;
 
@@ -61,7 +62,21 @@ replace emerg_h2m 	= . if (emerg_refused == 1) | (emerg_wouldnt==.);
 * COMPUTE H2M BY YEAR;
 
 preserve;
+global dataset SHED;
 do ${basedir}/../code/yearly_h2m.do;
 save ${basedir}/stats/output/SHED_h2mstat, replace;
 restore;
 
+////////////////////////////////////////////////////////////////////////////////
+* DISPLAY RESULTS IN COMMAND WINDOW;
+use ${basedir}/stats/output/SHED_h2mstat.dta, clear;
+rename paybills_h2m 		paybills;
+rename paybills400_h2m 		paybills400;
+rename ccmin_h2m 			ccmin;
+rename havemoney_h2m 		havemoney;
+rename rainyday_h2m 		rainyday;
+rename coverexpenses_h2m 	coverexpenses;
+rename spendinc_h2m 		spendinc;
+rename emerg_h2m 			emerg;
+li	year paybills	paybills400	ccmin		havemoney		spendinc, clean noobs;
+li	year ccmin		havemoney	rainyday	coverexpenses	emerg, clean noobs;

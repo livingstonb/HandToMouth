@@ -56,6 +56,7 @@ replace rainydayXget2000_h2m = . if year == 2009;
 * COMPUTE H2M BY YEAR;
 
 preserve;
+global dataset NFCS;
 do ${basedir}/../code/yearly_h2m.do;
 save ${basedir}/stats/output/NFCS_h2mstat, replace;
 restore;
@@ -63,3 +64,25 @@ restore;
 ////////////////////////////////////////////////////////////////////////////////
 * PLOTS;
 do ${basedir}/stats/code/stats_plots.do;
+
+////////////////////////////////////////////////////////////////////////////////
+* DISPLAY RESULTS IN COMMAND WINDOW;
+* responses to financial fragility question;
+quietly {;
+use ${basedir}/stats/output/NFCS_get2000, clear;
+rename get2000certain 		certain;
+rename get2000probably 		probably;
+rename get2000probablynot 	pnot;
+rename get2000not 			not;
+};
+li, clean noobs;
+
+* h2m stats;
+quietly {;
+use ${basedir}/stats/output/NFCS_h2mstat, clear;
+rename spendinc_h2m 		spendinc;
+rename paybills_h2m 		paybills;
+rename rainyday_h2m 		rainyday;
+rename rainydayXget2000_h2m rainydayXget2000;
+};
+li, clean noobs;

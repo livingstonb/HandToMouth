@@ -79,4 +79,10 @@ if h2m_consumption==1 {;
 	restore;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+* SHOW RESULTS IN COMMAND WINDOW;
+cd ${basedir}/stats/output;
+use PSID_h2mstat.dta, clear;
+li, clean noobs;
 
+matrix list H2M;
