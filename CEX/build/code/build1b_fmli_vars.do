@@ -113,16 +113,28 @@ replace	totalptax		= tottxpdm if totalptax==.; /* 2004q1-2014q5 */;
 * Other;
 gen		incrank			= inc_rnkm;				/* 2004q1- */;
 gen		poverty			= pov_cym;				/* 2004q1-2014q1 */;
+gen		wgt				= finlwt21;				/* - */;
+
+////////////////////////////////////////////////////////////////////////////////
+* REPLACE MISSING WITH ZEROS;
+local zeros selfearn rentinc othinc othinc2 pensioninc retsurvivor 
+	uiben localwelf socsec  int_and_div  saleshousehold  royalttrust
+	childsupp othchildsupp savint workcomp stocks saving ccdebt;
+foreach zero of local zeros {;
+	replace `zero' = 0 if `zero'==.;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 * DEFINE NEW VARIABLES;
 
-gen brliqpos = checking + saving + stocks;
-gen brliqneg = ccdebt;
-gen netbrliq = brliqpos - brliqneg;
-gen brilliqpos = studentdebt + irax + othassets + savbond;
+gen 	brliqpos 	= checking + saving + stocks;
+gen 	brliqneg 	= ccdebt;
+gen 	netbrliq	= brliqpos - brliqneg;
+gen 	brilliqpos	= studentdebt + irax + othassets + savbond;
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
-save ${basedir}/build/output/fmli_cleaned, replace;
+save ${basedir}/build/output/CEXfmli, replace;
