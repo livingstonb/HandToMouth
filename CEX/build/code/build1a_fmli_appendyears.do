@@ -69,8 +69,4 @@ forvalues yyyy = `firstyear'(1)`lastyear' {;
 * Save;
 save ${basedir}/build/temp/fmli_allyears, replace;
 
-* Remove yearly datasets;
-forvalues yyyy = `firstyear'(1)`lastyear' {;
-	* rm ${basedir}/build/temp/fmli`yyyy'.dta;
-};
 
