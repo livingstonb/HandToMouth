@@ -56,9 +56,8 @@ save PSID_h2mstat.dta, replace;
 restore;
 
 * Plots;
-cd $basedir/stats/code;
-do stats_plots.do;
-
+cd $basedir/../code;
+do plots_SCF_PSID.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CCDEBT AS LIQDEBT - COMPUTE H2M BY YEAR FOR 2011-2015;

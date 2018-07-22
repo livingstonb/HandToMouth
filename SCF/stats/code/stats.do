@@ -63,12 +63,10 @@ cd $basedir/stats/output;
 save SCFh2m_yearly.dta, replace;
 restore;
 
+* Plots;
 
-////////////////////////////////////////////////////////////////////////////////
-* PLOTS;
-
-cd $basedir/stats/code;
-do stats_plots.do;
+cd $basedir/../code;
+do plots_SCF_PSID.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
