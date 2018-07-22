@@ -32,14 +32,32 @@ tsset id YQ;
 
 
 * Wealth variables;
-gen		ccdebt		= creditx;					/* 2013q2- */;
+gen		ccdebt		= .;				
+replace	ccdebt		= 0 	if creditb=="1";			/* 2013q2- */;
+replace	ccdebt		= 500 	if creditb=="2";
+replace ccdebt		= 1000 	if creditb=="3";
+replace ccdebt		= 2500 	if creditb=="4";
+replace ccdebt		= 10000 if creditb=="5";
+replace ccdebt		= 35000 if creditb=="6";
+replace ccdebt		= creditx if creditx < .; 	/* 2013q2- */;
 gen 	checking	= ckbkactx; 				/* -2013q1 */;
 replace checking 	= liquidx if checking==.; 	/* 2013q2- */;
+replace	checking	= 500	if liquidb=="1";		/* 2013q2- */;
+replace checking	= 1000	if liquidb=="2";
+replace checking	= 2500 	if liquidb=="3";
+replace checking	= 10000 if liquidb=="4";
+replace checking	= 35000 if inlist(liquidb,"5","6");
 gen		saving		= savacctx; 				/* -2013q1 */;
 * saving included in liquidx for 2013q2-;
 replace	saving		= 0 if (YQ >= quarterly("2013 Q2","YQ")) & (checking<.);
 gen		stocks		= secestx;					/* -2013q1 */; 
 replace	stocks		= stockx if stocks==.;	 	/* 2013q2- */;
+replace	stocks		= 0		 if stockb=="1";		/* 2013q2- */;
+replace	stocks		= 2000	 if stockb=="2";
+replace stocks		= 10000	 if stockb=="3";
+replace stocks		= 50000	 if stockb=="4";
+replace stocks		= 200000 if stockb=="5";
+replace	stocks		= 450000 if stockb=="6";
 gen		studentdebt = studntx; 					/* 2013q2- */;
 gen		retacc		= irax;						/* 2013q2- */;
 gen		othassets	= othastx;					/* 2013q2- */;
@@ -53,10 +71,8 @@ replace	pension		= fpripenm if pension==.;	/* 2004q1- */;
 
 
 * Income variables;
-gen		income			= cuincome;				/* -2007q1 */;
-gen		income_post		= fincatxm;				/* 2004q1-2015q5 */;
-gen		income_pre		= fincbtxm;				/* 2004q1-2013q1 */;
-gen		earnings		= earnincx;				/* -2004q1 */;
+gen		income_post		= finatxem;				/* 20013q2- */;
+gen		income_pre		= fincbtxm;				/* 2004q1- */;
 gen		wages			= fsalaryx;				/* -2004q1,2006q1- */;
 replace	wages			= fsalarym 	if wages==.;	/* 2004q1- */;
 gen		farm			= ffrmincx;				/* -2004q1,2006q1-2013q1 */;
@@ -67,8 +83,6 @@ gen		selfearn		= fsmpfrxm;				/* 2013q2- */;
 gen		rentinc			= inclossa;				/* -2004q1,2006q1- */;
 replace	rentinc			= inclosam 	if rentinc==.;	/* 2004q1-2013q1 */;
 replace	rentinc			= netrentm 	if rentinc==.;	/* 2013q2- */;
-gen		othrentinc		= inclossb;				/* -2004q1,2006q1- */;
-replace	othrentinc		= inclosbm 	if othrentinc==.;	/* 2004q1-2013q1 */;
 gen		savint			= intearnx;				/* -2004q1,2006q1- */;
 replace	savint			= intearnm 	if savint==.;	/* 2004q1-2013q1 */;
 gen 	int_and_div		= intrdvxm;				/*	2013q1- */;
@@ -110,27 +124,20 @@ gen		saltrefund		= slrfundx;				/* -2015q1 */;
 gen		totalptax		= tottxpdx;				/* -2004q1,2006q1-2014q1 */;
 replace	totalptax		= tottxpdm if totalptax==.; /* 2004q1-2014q5 */;
 
+* Consumption;
+gen		totalexp		= totex4cq*4;
+
 * Other;
 gen		incrank			= inc_rnkm;				/* 2004q1- */;
 gen		poverty			= pov_cym;				/* 2004q1-2014q1 */;
 gen		wgt				= finlwt21;				/* - */;
 
 ////////////////////////////////////////////////////////////////////////////////
-* REPLACE MISSING WITH ZEROS;
-local zeros selfearn rentinc othinc othinc2 pensioninc retsurvivor 
-	uiben localwelf socsec  int_and_div  saleshousehold  royalttrust
-	childsupp othchildsupp savint workcomp stocks saving ccdebt;
-foreach zero of local zeros {;
-	replace `zero' = 0 if `zero'==.;
-};
-
-////////////////////////////////////////////////////////////////////////////////
 * DEFINE NEW VARIABLES;
 
-gen 	brliqpos 	= checking + saving + stocks;
-gen 	brliqneg 	= ccdebt;
-gen 	netbrliq	= brliqpos - brliqneg;
-gen 	brilliqpos	= studentdebt + irax + othassets + savbond;
+gen 	brliqpos 		= checking + saving + stocks;
+gen 	brliqneg 		= ccdebt;
+gen		incnobusfarm 	= income_pre - farm - bus;
 
 
 

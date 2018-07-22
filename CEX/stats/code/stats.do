@@ -13,13 +13,25 @@ compute_h2m.do is then called to perform the computations.
 * SAMPLE SELECTION;
 keep if (age>=22) & (age<=79);
 drop if (YQ < quarterly("2013 Q2","YQ"));
+drop if (selfearn>0 & wages <=0);
+drop if checking == .;
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+* REPLACE MISSING WITH ZEROS;
+local zeros ccdebt stocks saving farm bus;
+foreach zero of local zeros {;
+	replace `zero' = 0 if `zero'==.;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE H2M SPECIFICATION;
 * Select which income variable to use (labinc_post);
-gen incvar0 = wages + selfearn + rentinc + othinc + othinc2 + pensioninc
+gen incvar0 = income_post;
+	/* wages + selfearn + rentinc + othinc + othinc2 + pensioninc
 		+ retsurvivor + uiben + localwelf + socsec + int_and_div + saleshousehold
-		+ royalttrust + childsupp + othchildsupp + savint + workcomp;
+		+ royalttrust + childsupp + othchildsupp + savint + workcomp */;
 * How many months of income to use as credit limit (1,2,...);
 gen 	clim0 		= 1;
 * Select which liquid assets variable to use (netbrliq);
