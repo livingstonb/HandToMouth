@@ -39,18 +39,23 @@ global borrowlimtype0 normal;
 * h2m type (normal,commconsbeg,commconsend,finfrag);
 global h2mtype0 normal;
 * Select consumption variable;
-gen 	con0 		= .;
+gen con0 = .;
 * Declare the dataset;
 global dataset SCF;
+
+* Turn on/off computations (1=true,anything else=false);
+global stderror 1;
+local robust 1;
 
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do), STORE RESULTS AS MATRIX;
-do ${basedir}/../code/loop_h2m.do;
+if `robust' == 1 {;
+	do ${basedir}/../code/loop_h2m.do;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
-
 * Compute h2m statistics here;
 cd $basedir/../code;
 do compute_h2m.do;
@@ -74,6 +79,8 @@ do plots_SCF_PSID.do;
 cd ${basedir}/stats/output;
 use SCFh2m_yearly.dta, clear;
 li, clean noobs;
+* Std errors;
+matrix list h2mV;
 
 * Robustness checks;
 matrix list H2M;

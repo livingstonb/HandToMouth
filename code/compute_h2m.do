@@ -12,7 +12,8 @@ gen Wh2m 	= 0;
 gen Ph2m 	= 0;
 gen NWh2m 	= 0;
 gen monthincome = incvar/12;
-
+set trace on;
+set tracedepth 1;
 if strmatch("$borrowlimtype","reported")==1 {;
 	gen creditlim = maxcredit;
 };

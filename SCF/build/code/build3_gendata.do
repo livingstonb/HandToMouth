@@ -101,6 +101,7 @@ label values agedum l_age
 ////////////////////////////////////////////////////////////////////////////////
 
 
+drop X*
 cd ${basedir}/build/output
 save SCF_89_16_cleaned.dta, replace
 
