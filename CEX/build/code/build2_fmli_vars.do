@@ -133,6 +133,13 @@ gen		poverty			= pov_cym;				/* 2004q1-2014q1 */;
 gen		wgt				= finlwt21;				/* - */;
 
 ////////////////////////////////////////////////////////////////////////////////
+* REPLACE MISSING WITH ZEROS;
+local zeros ccdebt stocks saving farm bus;
+foreach zero of local zeros {;
+	replace `zero' = 0 if `zero'==.;
+};
+
+////////////////////////////////////////////////////////////////////////////////
 * DEFINE NEW VARIABLES;
 
 gen 	brliqpos 		= checking + saving + stocks;

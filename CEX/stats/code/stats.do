@@ -17,14 +17,6 @@ drop if (selfearn>0 & wages <=0);
 drop if checking == .;
 local samplesize = _N;
 
-
-////////////////////////////////////////////////////////////////////////////////
-* REPLACE MISSING WITH ZEROS;
-local zeros ccdebt stocks saving farm bus;
-foreach zero of local zeros {;
-	replace `zero' = 0 if `zero'==.;
-};
-
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE H2M SPECIFICATION;
 * Select which income variable to use (income_post,incomenobusfarm);

@@ -75,9 +75,9 @@ do compute_h2m.do;
 
 * Plot h2m by year;
 cd $basedir/../code;
-do plot_h2m_year.do;
+* do plot_h2m_year.do;
 cd $basedir/stats/output;
-graph export PSID_h2m_year20112015.png, replace;
+* graph export PSID_h2m_year20112015.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
