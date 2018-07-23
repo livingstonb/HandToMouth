@@ -39,7 +39,7 @@ global 	borrowlimtype0 normal;
 * h2m type (normal,finfrag);
 global 	h2mtype0 normal;
 * Select consumption variable;
-gen 	con0 		= totalexp;
+gen 	con0 		= totalexp/0.7;
 * Declare the dataset;
 global	dataset CEX;
 

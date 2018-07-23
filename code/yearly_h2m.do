@@ -19,9 +19,12 @@ else {;
 };
 
 * Get means by year;
-if strmatch("$dataset","SCF")==1 {;
+if ("$dataset"=="SCF") {;
 	collapse (mean) `h2ms' [aw=wgt], by(year im0100);
 	collapse (mean) `h2ms', by(year);
+};
+else if inlist("$dataset","SHED","NFCS") {;
+	collapse (mean) *_h2m [aw=wgt], by(year);
 };
 else {;
 	collapse (mean) `h2ms' [aw=wgt], by(year);

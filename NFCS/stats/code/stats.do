@@ -8,6 +8,7 @@ cap mkdir $basedir/stats/output;
 ////////////////////////////////////////////////////////////////////////////////
 cd $basedir/build/output;
 use NFCS.dta;
+global dataset NFCS;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
@@ -66,7 +67,7 @@ restore;
 do ${basedir}/stats/code/stats_plots.do;
 
 ////////////////////////////////////////////////////////////////////////////////
-* DISPLAY RESULTS IN COMMAND WINDOW;
+* DISPL AY RESULTS IN COMMAND WINDOW;
 * responses to financial fragility question;
 quietly {;
 use ${basedir}/stats/output/NFCS_get2000, clear;

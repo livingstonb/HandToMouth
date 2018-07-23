@@ -9,10 +9,11 @@ This file is where the user indicates which statistics will be computed.
 
 cd $basedir/build/output;
 use SHED.dta;
+global dataset SHED;
 
 ///////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
-keep if (age<=22) & age<=79);
+keep if (age>=22) & (age<=79);
 
 ///////////////////////////////////////////////////////////////////////////////
 * Unable to pay all bills in full this month;
@@ -29,8 +30,8 @@ replace paybills400_h2m = 0 if paybills400 == 1;
 one or more credit cards? (0=never) (1=once) (2=some of the time)
 (3=most or all of the time) */;
 gen		ccmin_h2m = .;
-replace	ccmin_h2m = 1 if inlist(ccmin,0,1) & (year > 2014);
-replace ccmin_h2m = 0 if inlist(ccmin,2,3) & (year > 2014);
+replace	ccmin_h2m = 1 if inlist(ccmin,3) & (year > 2014);
+replace ccmin_h2m = 0 if inlist(ccmin,0,1,2) & (year > 2014);
 	
 * Rarely or never have money left over at the end of the month;
 gen 	havemoney_h2m = .;
@@ -46,7 +47,6 @@ replace rainyday_h2m = 0 if rainyday==1;
 gen 	coverexpenses_h2m = .;
 replace coverexpenses_h2m = 1 if coverexpenses==0;
 replace coverexpenses_h2m = 0 if coverexpenses==1;
-replace coverexpenses_h2m = . if year == 2013; /* outlier */;
 
 /* In the past month, would you say that your (and your spouse's/and your
 partner's income) was...  */;
@@ -70,13 +70,14 @@ restore;
 ////////////////////////////////////////////////////////////////////////////////
 * DISPLAY RESULTS IN COMMAND WINDOW;
 use ${basedir}/stats/output/SHED_h2mstat.dta, clear;
+keep year *_h2m;
 rename paybills_h2m 		paybills;
 rename paybills400_h2m 		paybills400;
 rename ccmin_h2m 			ccmin;
 rename havemoney_h2m 		havemoney;
 rename rainyday_h2m 		rainyday;
-rename coverexpenses_h2m 	coverexpenses;
+rename coverexpenses_h2m 	cover3mos;
 rename spendinc_h2m 		spendinc;
-rename emerg_h2m 			emerg;
-li	year paybills	paybills400	ccmin		havemoney		spendinc, clean noobs;
-li	year ccmin		havemoney	rainyday	coverexpenses	emerg, clean noobs;
+rename emerg_h2m 			emerg400;
+li	year paybills	paybills400	ccmin			spendinc, clean noobs;
+li	year havemoney	rainyday	cover3mos	emerg400, clean noobs;
