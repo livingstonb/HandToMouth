@@ -15,7 +15,7 @@ keep if (age>=22) & (age<=79);
 drop if (YQ < quarterly("2013 Q2","YQ"));
 drop if (selfearn>0 & wages <=0);
 drop if checking == .;
-
+local samplesize = _N;
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -27,8 +27,8 @@ foreach zero of local zeros {;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE H2M SPECIFICATION;
-* Select which income variable to use (labinc_post);
-gen incvar0 = income_post;
+* Select which income variable to use (income_post,incomenobusfarm);
+gen incvar0 		= income_post;
 	/* wages + selfearn + rentinc + othinc + othinc2 + pensioninc
 		+ retsurvivor + uiben + localwelf + socsec + int_and_div + saleshousehold
 		+ royalttrust + childsupp + othchildsupp + savint + workcomp */;
@@ -38,16 +38,16 @@ gen 	clim0 		= 1;
 gen 	liqvar0 	= netbrliq;
 * Select pay frequency (n = n paychecks/month);
 gen 	payfreq0 	= 2;
-* Select illiquid wealth variable (netbrilliqnc);
+* Select illiquid wealth variable (0);
 gen 	illiqvar0 	= 0;
-* Select net worth variable (networthnc);
+* Select net worth variable (0);
 gen 	nwvar0 		= 0;
 * Borrowing limit type (normal);
 global 	borrowlimtype0 normal;
 * h2m type (normal,finfrag);
 global 	h2mtype0 normal;
 * Select consumption variable;
-gen 	con0 		= 0;
+gen 	con0 		= totalexp;
 * Declare the dataset;
 global	dataset CEX;
 
@@ -71,16 +71,46 @@ save CEX_h2mstat.dta, replace;
 restore;
 
 * Plots;
-cd $basedir/stats/code;
-do stats_plots.do;
+* h2m by age;
+preserve;
+collapse (mean) h2m [aw=wgt], by(age);
+sort age;
+graph twoway line h2m age, lpattern(solid)
+	graphregion(color(white))
+	legend(label(1 "Total Hand-to-Mouth")
+	cols(1) region(lcolor(white))) xtitle("Age") ytitle("");
+restore;
+cd $basedir/stats/output;
+graph export ${dataset}_h2m_age.png, replace;
 
+////////////////////////////////////////////////////////////////////////////////
+* CONSUMPTION HTM;
+preserve;
+drop if con == 0;
+local samplesize_consumption = _N;
+do ${basedir}/../code/compute_h2m_consumption.do;
+cd $basedir/../code;
+do yearly_h2m.do;
+cd $basedir/stats/output;
+save CEX_h2mstat_con.dta, replace;
+restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
 * Baseline;
 cd ${basedir}/stats/output;
+di "BASELINE H2M:";
 use CEX_h2mstat.dta, clear;
+li, clean noobs;
+
+* Consumption;
+cd ${basedir}/stats/output;
+di "CONSUMPTION H2M:";
+use CEX_h2mstat_con.dta, clear;
 li, clean noobs;
 
 * Robustness checks;
 matrix list H2M;
+
+di "SAMPLE SIZE (BASELINE) = " `samplesize';
+di "SAMPLE SIZE (CONSUMPTION) = " `samplesize_consumption';

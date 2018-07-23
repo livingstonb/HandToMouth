@@ -137,7 +137,7 @@ gen		wgt				= finlwt21;				/* - */;
 
 gen 	brliqpos 		= checking + saving + stocks;
 gen 	brliqneg 		= ccdebt;
-gen		incnobusfarm 	= income_pre - farm - bus;
+gen		netbrliq 		= brliqpos - brliqneg;
 
 
 

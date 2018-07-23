@@ -11,14 +11,20 @@ foreach h2mvar of varlist *h2m  {;
 	scalar scpooled_`h2mvar' = pooled[1,1];
 } */;
 
+if ("$dataset"=="CEX") {;
+	local h2ms h2m;
+};
+else {;
+	local h2ms h2m Wh2m Ph2m NWh2m;
+};
 
 * Get means by year;
 if strmatch("$dataset","SCF")==1 {;
-	collapse (mean) *h2m [aw=wgt], by(year im0100);
-	collapse (mean) *h2m, by(year);
+	collapse (mean) `h2ms' [aw=wgt], by(year im0100);
+	collapse (mean) `h2ms', by(year);
 };
 else {;
-	collapse (mean) *h2m [aw=wgt], by(year);
+	collapse (mean) `h2ms' [aw=wgt], by(year);
 };
 
 /* Add pooled/averaged row by transposing, creating a new variable, and

@@ -4,8 +4,14 @@
 compute_h2m each time and storing the results in a matrix */;
 
 * Initialize;
-local 	h2ms	h2m		Wh2m	Ph2m	NWh2m;
-local 	model 	incvar 	clim 	liqvar 	payfreq illiqvar nwvar con;
+if ("$dataset"=="CEX") {;
+	local h2ms h2m;
+};
+else {;
+	local h2ms h2m Wh2m Ph2m NWh2m;
+};
+
+local model incvar clim liqvar payfreq illiqvar nwvar con;
 foreach var of local model {;
 	gen `var' = .;
 };
