@@ -88,7 +88,9 @@ forvalues spec=1(1)5 {;
 	drop *h2m;
 };
 
-* Set matrix rownames;
+* Set matrix row and column names;
+matrix colnames H2Mrobust = h2m Wh2m Ph2m NWh2m;
+matrix colnames H2MrobustV = h2m Wh2m Ph2m NWh2m;
 matrix rownames H2Mrobust = base finfrag oneycredit wkpay mopay;
 matrix rownames H2MrobustV = base finfrag oneycredit wkpay mopay;
 

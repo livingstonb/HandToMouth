@@ -70,15 +70,24 @@ cd $basedir/../code;
 do plots_SCF_PSID.do;
 
 ////////////////////////////////////////////////////////////////////////////////
-* SHOW RESULTS IN COMMAND WINDOW;
+* SAVE MATRICES
 * Baseline;
 cd ${basedir}/stats/output;
-use SCFh2m_yearly.dta, clear;
-li, clean noobs;
-* Std errors;
-matrix list h2mV;
+use SCFh2m_yearly.dta;
+list, clean noobs;
+clear;
 
-* Robustness checks;
+svmat H2Mrobust, names(col);
+save H2Mrobust.dta, replace;
+clear;
+
+* Compute and save std errors;
+svmat H2MrobustV, names(col);
+foreach var of varlist *h2m {;
+	replace `var' = sqrt(`var')
+};
+save H2Mrobust_stderrors.dta, replace;
+
 matrix list H2Mrobust;
 matrix list H2MrobustV;
 
