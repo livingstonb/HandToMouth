@@ -252,8 +252,9 @@ else {
 }
 ///////////////////////////////////////////////////////////////////////////////
 // deflates data provided for the year prior to the SCF surveys
-// comment out to replicate paper
-
+// set to 0 to replicate paper
+scalar cpilag = 0
+if cpilag == 1 {
 gen CPILAG = 0
 replace CPILAG = 3526/3482 if year == 2016
 replace CPILAG = 3422/3373 if year == 2013
@@ -265,7 +266,7 @@ replace CPILAG = 2395/2363 if year == 1998
 replace CPILAG = 2253/2200 if year == 1995
 replace CPILAG = 2102/2051 if year == 1992
 replace CPILAG = 1886/1807 if year == 1989
-
+}
 local lagvars hh_earnings hh_selfy uiben childben tanf ssinc othinc labinc labincplus supportpmt usuallabinc
 foreach lagvar of local lagvars {
 replace `lagvar'=`lagvar'*CPILAG
