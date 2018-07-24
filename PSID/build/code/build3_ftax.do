@@ -1,7 +1,7 @@
 cd $basedir/build/temp
 clear
 set more off
-
+// Code originally written by Justin Weidner
 /* Generates tax-relevant variables and runs taxsim9 */
 
 u fam1c, clear

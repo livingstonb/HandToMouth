@@ -1,5 +1,9 @@
 clear
 
+
+// Code originally written by Justin Weidner
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // grabs relevant data from the full data set. See SCF codebooks for the exact
 // wording of the questions

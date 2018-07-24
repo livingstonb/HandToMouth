@@ -4,6 +4,9 @@ set more off
 * cap log close
 * log using $basedir/create1c_makeannual, replace t
 
+// Code originally written by Justin Weidner
+
+
 /* Converts data to yearly */
 cd $basedir/build/temp
 u fam1a, clear

@@ -1,3 +1,6 @@
+
+// Code originally written by Justin Weidner
+
 ****EXTRACTS FROM THE FAMILY FILES THE VARIABLES OF INTEREST *****
 cap mkdir $basedir/build/temp
 

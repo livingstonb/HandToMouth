@@ -2,6 +2,9 @@
 and exports SCF_89_16_extract.dta, SCF_89_16_full.dta to temp folder
 */
 
+// Code originally written by Justin Weidner
+
+
 clear
 cap mkdir ${basedir}/build/temp
 

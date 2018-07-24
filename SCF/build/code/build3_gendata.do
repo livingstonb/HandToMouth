@@ -1,6 +1,9 @@
 clear
 cap mkdir ${basedir}/build/output
 
+// Code originally written by Justin Weidner
+
+
 // this file generates all of the different definitions for the robustness checks
 
 cd ${basedir}/build/temp
