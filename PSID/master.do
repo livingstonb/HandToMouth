@@ -25,8 +25,10 @@ do build2b_wealth.do;
 cd $basedir/build/code;
 do build2c_mergewealth.do;
 cd $basedir/build/code;
+do build2d_topcoding.do;
 
 * Run taxsim9;
+cd $basedir/build/code;
 do build3_ftax.do;
 
 * Merge consumption and wealth datasets, create new variables;

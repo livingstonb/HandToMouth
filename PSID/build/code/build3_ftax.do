@@ -4,7 +4,7 @@ set more off
 // Code originally written by Justin Weidner
 /* Generates tax-relevant variables and runs taxsim9 */
 
-u fam1c, clear
+u fam1d, clear
 
 //Manual adjustment
 replace state=41 if year==2001&intid==6357
