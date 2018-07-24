@@ -11,11 +11,6 @@ else {;
 	local h2ms h2m Wh2m Ph2m NWh2m;
 };
 
-local model incvar clim liqvar payfreq illiqvar nwvar con;
-foreach var of local model {;
-	gen `var' = .;
-};
-
 if strmatch("$dataset","SCF")==1 {;
 	cd ${basedir}/build/temp;
 	merge m:1 YY1 year using replicates.dta, nogen;
@@ -25,12 +20,6 @@ if strmatch("$dataset","SCF")==1 {;
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
 forvalues spec=1(1)5 {;
-	* Set to baseline;
-	foreach var of local model {;
-		replace `var' = `var'0;
-	};
-	global borrowlimtype 	$borrowlimtype0;
-	global h2mtype			$h2mtype0;
 	
 	* Set new specification;
 	if `spec'==1 {; 
@@ -56,22 +45,23 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
-	foreach h2mdef of local h2ms {;
-		scfcombo `h2mdef' [aw=wgt], command(regress) reps(200) imps(5);
-		if "`h2mdef'"=="h2m" {;
-			matrix h2mrobust = e(b);
-			matrix h2mrobustV = e(V);
-		};
-		else {;
-			matrix h2mrobust = h2mrobust,e(b);
-			matrix h2mrobustV = h2mrobustV,e(V);
+	if "$dataset"=="SCF" {;
+		foreach h2mdef of local h2ms {;
+			scfcombo `h2mdef' [aw=wgt], command(regress) reps(200) imps(5);
+			if "`h2mdef'"=="h2m" {;
+				matrix h2mrobust = e(b);
+				matrix h2mrobustV = e(V);
+			};
+			else {;
+				matrix h2mrobust = h2mrobust,e(b);
+				matrix h2mrobustV = h2mrobustV,e(V);
+			};
 		};
 	};
-
 	else {;
 		quietly mean `h2ms' [aw=wgt];
 		matrix h2mrobust = e(b);
-		matrix h2mrobustV = (.);
+		matrix h2mrobustV = (.,.,.,.,.);
 	};
 
 	* Store in matrix;
@@ -86,6 +76,16 @@ forvalues spec=1(1)5 {;
 	
 
 	drop *h2m;
+	
+	* Set back to baseline;
+	replace incvar = INCVAR;
+	replace clim = CLIM;
+	replace liqvar = LIQVAR;
+	replace payfreq = PAYFREQ;
+	replace illiqvar = ILLIQVAR;
+	replace nwvar = NWVAR;
+	global borrowlimtype 	$BORROWLIMTYPE;
+	global h2mtype			$H2MTYPE;
 };
 
 * Set matrix row and column names;
@@ -93,10 +93,3 @@ matrix colnames H2Mrobust = h2m Wh2m Ph2m NWh2m;
 matrix colnames H2MrobustV = h2m Wh2m Ph2m NWh2m;
 matrix rownames H2Mrobust = base finfrag oneycredit wkpay mopay;
 matrix rownames H2MrobustV = base finfrag oneycredit wkpay mopay;
-
-* Set back to baseline;
-foreach var of local model {;
-	replace `var' = `var'0;
-};
-global borrowlimtype 	$borrowlimtype0;
-global h2mtype			$h2mtype0;

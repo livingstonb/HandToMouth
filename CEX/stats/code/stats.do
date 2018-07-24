@@ -9,6 +9,12 @@ This file is where the user indicates how h2m will be computed. The file
 compute_h2m.do is then called to perform the computations.
 */;
 
+/* Output:
+	robustness checks				- CEXrobust.dta
+	yearly h2m statistics 			- CEXh2m_yearly.dta
+	yearly h2m stats (consumption)	- CEXh2m_yearly_consumption.dta
+*/;
+
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
 keep if (age>=22) & (age<=79);
@@ -43,6 +49,14 @@ gen 	con0 		= totalexp/0.7;
 * Declare the dataset;
 global	dataset CEX;
 
+* Set to baseline;
+global model incvar clim liqvar payfreq illiqvar nwvar con;
+foreach var of global model {;
+	replace `var' = `var'0;
+};
+global borrowlimtype 	$borrowlimtype0;
+global h2mtype			$h2mtype0;
+
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do);
 do ${basedir}/../code/loop_h2m.do;
@@ -59,7 +73,7 @@ preserve;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save CEX_h2mstat.dta, replace;
+save CEXh2m_y.dta, replace;
 restore;
 
 * Plots;
@@ -84,7 +98,7 @@ do ${basedir}/../code/compute_h2m_consumption.do;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save CEX_h2mstat_con.dta, replace;
+save CEXh2m_yearly_consumption.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,16 +106,20 @@ restore;
 * Baseline;
 cd ${basedir}/stats/output;
 di "BASELINE H2M:";
-use CEX_h2mstat.dta, clear;
+use CEXh2m_yearly.dta, clear;
 li, clean noobs;
 
 * Consumption;
 cd ${basedir}/stats/output;
 di "CONSUMPTION H2M:";
-use CEX_h2mstat_con.dta, clear;
+use CEXh2m_yearly_consumption.dta, clear;
 li, clean noobs;
 
 * Robustness checks;
+clear;
+svmat H2M, names(col);
+cd ${basedir}/stats.output;
+save H2Mrobust.dta;
 matrix list H2M;
 
 di "SAMPLE SIZE (BASELINE) = " `samplesize';

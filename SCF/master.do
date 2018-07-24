@@ -3,7 +3,12 @@ Written by Justin Weidner, edited and re-organized by Brian
 Livingston.
 
 Computes HtM statistics for the US based on the 1989-2016 SCF surveys.
-Final output stored in SCF/stats/output
+Output:
+	Robustness checks 				- H2Mrobust.dta
+	Robustness checks (std errors)	- H2Mrobust_stderrors.dta
+	h2m estimates by year			- SCFh2m_yearly.dta
+
+
 Select H2M definition in SCF/stats/code/stats.do
 */ //////////////////////////////////////////////////////////////////////////////
 

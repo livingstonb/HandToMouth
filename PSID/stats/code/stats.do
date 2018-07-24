@@ -9,6 +9,11 @@ This file is where the user indicates how h2m will be computed. The file
 compute_h2m.do is then called to perform the computations.
 */;
 
+/* Output:
+	robustness checks 	- PSIDrobust.dta
+	yearly h2m stats	- PSIDh2m_yearly.dta
+*/;
+
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
 keep if (age>=22) & (age<=79);
@@ -17,28 +22,40 @@ drop if labinc < 0;
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE H2M SPECIFICATION;
 * Select which income variable to use (labinc_post);
-gen 	incvar0 = labinc_post;
+gen 	INCVAR = labinc_post;
 * How many months of income to use as credit limit (1,2,...);
-gen 	clim0 		= 1;
+gen 	CLIM 		= 1;
 * Select which liquid assets variable to use (netbrliq);
-gen 	liqvar0 	= netbrliq;
+gen 	LIQVAR 	= netbrliq;
 * Select pay frequency (n = n paychecks/month);
-gen 	payfreq0 	= 2;
+gen 	PAYFREQ 	= 2;
 * Select illiquid wealth variable (netbrilliqnc);
-gen 	illiqvar0 	= netbrilliqnc;
+gen 	ILLIQVAR 	= netbrilliqnc;
 * Select net worth variable (networthnc);
-gen 	nwvar0 		= networthnc;
+gen 	NWVAR 		= networthnc;
 * Borrowing limit type (normal);
-global 	borrowlimtype0 normal;
+global 	BORROWLIMTYPE normal;
 * h2m type (normal,finfrag);
-global 	h2mtype0 normal;
+global 	H2MTYPE normal;
 * Select consumption variable;
-gen 	con0 		= ndur;
+gen 	CON 		= ndur;
 * Declare the dataset;
 global dataset PSID;
 
+* Set to baseline;
+gen incvar = INCVAR;
+gen clim = CLIM;
+gen liqvar = LIQVAR;
+gen payfreq = PAYFREQ;
+gen illiqvar = ILLIQVAR;
+gen nwvar = NWVAR;
+global borrowlimtype $BORROWLIMTYPE;
+global h2mtype	$H2MTYPE;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do);
+
 do ${basedir}/../code/loop_h2m.do;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +70,7 @@ preserve;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save PSID_h2mstat.dta, replace;
+save PSIDh2m_yearly.dta, replace;
 restore;
 
 * Plots;
@@ -84,8 +101,12 @@ cd $basedir/stats/output;
 * SHOW RESULTS IN COMMAND WINDOW;
 * Baseline;
 cd ${basedir}/stats/output;
-use PSID_h2mstat.dta, clear;
+use PSIDh2m_yearly.dta, clear;
 li, clean noobs;
 
 * Robustness checks;
-matrix list H2M;
+clear;
+svmat H2Mrobust, names(col);
+cd ${basedir}/stats/output;
+save PSIDrobust.dta, replace;
+matrix list H2Mrobust;

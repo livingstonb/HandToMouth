@@ -22,26 +22,36 @@ drop if (labearn1 == 0 & selfearn1>0) | (labearn2 == 0 &  selfearn2>0);
 
 ////////////////////////////////////////////////////////////////////////////////
 * Select which income variable to use (labinc,netlabinc);
-gen incvar0 = netlabinc;
+gen INCVAR = netlabinc;
 * How many months of income to use as credit limit (1,2,...);
-gen clim0 = 1;
+gen CLIM = 1;
 * Select which liquid assets variable to use (netbrliq);
-gen liqvar0 = netbrliq;
+gen LIQVAR = netbrliq;
 * Select pay frequency (n = n paychecks/month);
 drop payfreq;
-gen payfreq0 = 2;
+gen PAYFREQ = 2;
 * Select illiquid wealth variable (familliqnv, familliqvehic);
-gen illiqvar0 = netbrilliqnc;
+gen ILLIQVAR = netbrilliqnc;
 * Select net worth variable (famwealthvehic,famwealthnv);
-gen nwvar0 = networthnc;
+gen NWVAR = networthnc;
 * Borrowing limit type (normal,reported);
-global borrowlimtype0 normal;
+global BORROWLIMTYPE normal;
 * h2m type (normal,commconsbeg,commconsend,finfrag);
-global h2mtype0 normal;
+global H2MTYPE normal;
 * Select consumption variable;
-gen con0 = .;
+gen CON = .;
 * Declare the dataset;
 global dataset SCF;
+
+* Set to baseline;
+gen incvar = INCVAR;
+gen clim = CLIM;
+gen liqvar = LIQVAR;
+gen payfreq = PAYFREQ;
+gen illiqvar = ILLIQVAR;
+gen nwvar = NWVAR;
+global borrowlimtype $BORROWLIMTYPE;
+global h2mtype	$H2MTYPE;
 
 
 ////////////////////////////////////////////////////////////////////////////////
