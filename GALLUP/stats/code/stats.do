@@ -5,6 +5,10 @@ capture mkdir $basedir/stats/output;
 
 /* This is the main do-file for computing statistics for the GALLUP US Daily */;
 
+/* Output:
+	question responses, mean over years	- GALLUPh2m.dta
+*/;
+
 ////////////////////////////////////////////////////////////////////////////////
 cd $basedir/build/output;
 use GALLUP.dta;
@@ -33,7 +37,7 @@ replace h2m_affordneeds = 0 if affordneeds == 1;
 preserve;
 collapse (mean) h2m* [aw=wgt];
 cd $basedir/stats/output;
-save GALLUP_h2mstat.dta, replace;
+save GALLUPh2m.dta, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////

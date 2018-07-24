@@ -4,10 +4,7 @@ cd $basedir/build/output;
 use PSID.dta;
 cap mkdir $basedir/stats/output;
 
-/*
-This file is where the user indicates how h2m will be computed. The file
-compute_h2m.do is then called to perform the computations.
-*/;
+/* This is the main do-file for computing hand-to-mouth statistics for the SCF*/;
 
 /* Output:
 	robustness checks 	- PSIDrobust.dta

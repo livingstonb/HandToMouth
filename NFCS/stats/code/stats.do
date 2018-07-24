@@ -5,6 +5,11 @@ cap mkdir $basedir/stats/output;
 
 /* Computes statistics from NFCS */;
 
+/* Output:
+	yearly h2m stats 			- NFCSh2m_yearly.dta
+	responses to $2000 question - NFCS_get2000.dta
+*/;
+
 ////////////////////////////////////////////////////////////////////////////////
 cd $basedir/build/output;
 use NFCS.dta;
@@ -59,7 +64,7 @@ replace rainydayXget2000_h2m = . if year == 2009;
 preserve;
 global dataset NFCS;
 do ${basedir}/../code/yearly_h2m.do;
-save ${basedir}/stats/output/NFCS_h2mstat, replace;
+save ${basedir}/stats/output/NFCSh2m_yearly, replace;
 restore;
 
 ////////////////////////////////////////////////////////////////////////////////

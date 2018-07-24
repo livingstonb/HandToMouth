@@ -1,13 +1,17 @@
 //////////////////////////////////////////////////////////////////////////////
 #delimit;
 set more 1;
-cap mkdir $basedir/stats/output;
-
-/* This is the main do-file for computing hand-to-mouth statistics for the SCF.
-Written by Brian Livingston */;
-
 cd $basedir/build/output;
 use SCF_89_16_cleaned.dta, clear;
+cap mkdir $basedir/stats/output;
+
+/* This is the main do-file for computing hand-to-mouth statistics for the SCF.*/;
+
+/* Output:
+	robustness checks 				- SCFrobust.dta
+	robustness checks std errors	- SCFrobust_stderrors.dta
+	yearly h2m stats				- SCFh2m_yearly.dta
+*/;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
@@ -92,7 +96,7 @@ list, clean noobs;
 clear;
 
 svmat H2Mrobust, names(col);
-save H2Mrobust.dta, replace;
+save SCFrobust.dta, replace;
 clear;
 
 * Compute and save std errors;
@@ -101,7 +105,7 @@ svmat H2MrobustV, names(col);
 foreach var of varlist *h2m {;
 	replace `var' = sqrt(`var')
 };
-save H2Mrobust_stderrors.dta, replace;
+save SCFrobust_stderrors.dta, replace;
 };
 
 matrix list H2Mrobust;
