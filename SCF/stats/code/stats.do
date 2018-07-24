@@ -21,6 +21,10 @@ drop if labinc<0;
 drop if (labearn1 == 0 & selfearn1>0) | (labearn2 == 0 &  selfearn2>0);
 
 ////////////////////////////////////////////////////////////////////////////////
+* SELECT WHETHER TO COMPUTE STANDARD ERRORS;
+global stderrors 0;
+
+////////////////////////////////////////////////////////////////////////////////
 * Select which income variable to use (labinc,netlabinc);
 gen INCVAR = netlabinc;
 * How many months of income to use as credit limit (1,2,...);
@@ -92,13 +96,17 @@ save H2Mrobust.dta, replace;
 clear;
 
 * Compute and save std errors;
+if ${stderrors}==1 {;
 svmat H2MrobustV, names(col);
 foreach var of varlist *h2m {;
 	replace `var' = sqrt(`var')
 };
 save H2Mrobust_stderrors.dta, replace;
+};
 
 matrix list H2Mrobust;
+if ${stderrors}==1 {;
 matrix list H2MrobustV;
+};
 
 

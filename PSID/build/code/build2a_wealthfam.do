@@ -317,7 +317,7 @@ rename ER65404 homeequity;
 rename ER65408 networth;
 rename ER65406 networthnohomeequity;
 rename ER61736 bus;
-replace bus = bus - ER61740;
+rename ER61740 busdebt;
 
 drop ER*;
 cd $basedir/build/temp;

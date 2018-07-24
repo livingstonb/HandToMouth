@@ -45,7 +45,7 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
-	if "$dataset"=="SCF" {;
+	if ("$dataset"=="SCF") & (${stderrors}==1) {;
 		foreach h2mdef of local h2ms {;
 			scfcombo `h2mdef' [aw=wgt], command(regress) reps(200) imps(5);
 			if "`h2mdef'"=="h2m" {;

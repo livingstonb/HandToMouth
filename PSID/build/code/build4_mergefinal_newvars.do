@@ -15,6 +15,8 @@ merge 1:1 intid year using fam1c.dta, update;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CREATE NEW VARIABLES;
+replace	busdebt				= 0 if busdebt == .;
+replace	bus					= bus - busdebt;
 gen 	liqpos 				= checking;
 
 * gen 	liqneg 				= ccdebt;

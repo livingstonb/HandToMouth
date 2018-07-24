@@ -79,7 +79,7 @@ do plots_SCF_PSID.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * CCDEBT AS LIQDEBT - COMPUTE H2M BY YEAR FOR 2011-2015;
-
+preserve;
 * Drop earlier years;
 drop if year < 2011;
 * Set liqvar to ccdebt;
@@ -95,8 +95,8 @@ do compute_h2m.do;
 cd $basedir/../code;
 * do plot_h2m_year.do;
 cd $basedir/stats/output;
-* graph export PSID_h2m_year20112015.png, replace;
-
+* graph export PSIDh2m_yearly_2011_2015.png, replace;
+restore;
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
 * Baseline;
