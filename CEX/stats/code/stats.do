@@ -19,7 +19,6 @@ compute_h2m.do is then called to perform the computations.
 ////////////////////////////////////////////////////////////////////////////////
 * SAMPLE SELECTION;
 keep if (age>=22) & (age<=79);
-drop if (YQ < quarterly("2013 Q2","YQ"));
 drop if (selfearn>0 & wages <=0);
 drop if checking == .;
 local samplesize = _N;

@@ -30,6 +30,8 @@ gen YQ = quarterly(qdate,"YQ");
 format YQ %tq;
 tsset id YQ;
 
+* DROP UNECESSARY OBSERVATIONS FOR SPEED;
+drop if (YQ < quarterly("2013 Q2","YQ"));
 
 * Wealth variables;
 gen		ccdebt		= .;				
@@ -146,10 +148,11 @@ gen obsid = _n;
 expand 5;
 gen imps = 0;
 bysort obsid: replace imps = _n;
-local impvars finatxe fincbtx fsalary ffrminc fnonfrm
+* add imputations only for necessary variables (saves a lot of time);
+local impvars finatxe fincbtx; /* fsalary ffrminc fnonfrm
 	fsmpfrx inclosa netrent intearn intrdvx finincx royestx aliothx
 	chdothx compens foodsmp frretir fssix othregx othrinc pension retsurv
-	unemplx welfare famtfed fsltaxx tottxpd inc_rnk;
+	unemplx welfare famtfed fsltaxx tottxpd inc_rnk */;
 foreach impvar of local impvars {;
 	di "`impvar'";
 	gen `impvar'_imp = .;
@@ -185,7 +188,6 @@ gen		netbrliq 		= brliqpos - brliqneg;
 * KEEP ONLY NECESSARY VARIABLES (multiple imputations create very large dataset);
 keep year age wt* mm* reps income_post netbrliq wgt income_pre totalexp YQ
 	selfearn checking wages income_post_imp income_pre_imp;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;

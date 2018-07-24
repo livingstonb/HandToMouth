@@ -15,6 +15,7 @@ cap mkdir $basedir/stats/output;
 * SAMPLE SELECTION;
 keep if (age>=22) & (age<=79);
 drop if labinc < 0;
+drop if truncw == 1;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE H2M SPECIFICATION;
@@ -39,6 +40,9 @@ gen 	CON 		= ndur;
 * Declare the dataset;
 global dataset PSID;
 
+* Cannot compute standard errors for PSID;
+global stderrors 0;
+
 * Set to baseline;
 gen incvar = INCVAR;
 gen clim = CLIM;
@@ -46,6 +50,7 @@ gen liqvar = LIQVAR;
 gen payfreq = PAYFREQ;
 gen illiqvar = ILLIQVAR;
 gen nwvar = NWVAR;
+gen con = CON;
 global borrowlimtype $BORROWLIMTYPE;
 global h2mtype	$H2MTYPE;
 

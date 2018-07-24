@@ -9,7 +9,7 @@ OUTPUT DIRECTORY WILL BE AT LEAST 8 GBs */;
 ////////////////////////////////////////////////////////////////////////////////
 clear*;
 set more 1;
-global basedir /Users/brianlivingston/Documents/GitHub/HandToMouth/CEX;
+global basedir /Users/Brian/Documents/GitHub/HandToMouth/CEX;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD DIRECTORY;
