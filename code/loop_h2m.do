@@ -11,12 +11,11 @@ else {;
 	local h2ms h2m Wh2m Ph2m NWh2m;
 };
 
-if strmatch("$dataset","SCF")==1 {;
+if ("$dataset"=="SCF") {;
 	cd ${basedir}/build/temp;
 	merge m:1 YY1 year using replicates.dta, nogen;
 	gen rep = im0100;
 };
-
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
 forvalues spec=1(1)5 {;
@@ -45,9 +44,15 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
-	if ("$dataset"=="SCF") & (${stderrors}==1) {;
+	if ${stderrors}==1 {;
+		if "${dataset}"=="SCF" {;
+			local totalreps 200;
+		};
+		else if "${dataset}"=="CEX" {;
+			local totalreps 44;
+		};
 		foreach h2mdef of local h2ms {;
-			scfcombo `h2mdef' [aw=wgt], command(regress) reps(200) imps(5);
+			scfcombo `h2mdef' [aw=wgt], command(regress) reps(`totalreps') imps(5);
 			if "`h2mdef'"=="h2m" {;
 				matrix h2mrobust = e(b);
 				matrix h2mrobustV = e(V);
@@ -84,12 +89,13 @@ forvalues spec=1(1)5 {;
 	replace payfreq = PAYFREQ;
 	replace illiqvar = ILLIQVAR;
 	replace nwvar = NWVAR;
+	replace con = CON;
 	global borrowlimtype 	$BORROWLIMTYPE;
 	global h2mtype			$H2MTYPE;
 };
 
 * Set matrix row and column names;
-matrix colnames H2Mrobust = h2m Wh2m Ph2m NWh2m;
-matrix colnames H2MrobustV = h2m Wh2m Ph2m NWh2m;
+matrix colnames H2Mrobust = `h2ms';
+matrix colnames H2MrobustV = `h2ms';
 matrix rownames H2Mrobust = base finfrag oneycredit wkpay mopay;
 matrix rownames H2MrobustV = base finfrag oneycredit wkpay mopay;

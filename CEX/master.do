@@ -3,10 +3,13 @@
 /* This is the main do-file to compute hand-to-mouth statistics for the
 CEX. Code written by Brian Livingston. */;
 
+/* CAUTION: BECAUSE OF THE WAY THIS CODE DEALS WITH MULTIPLE IMPUTATIONS,
+OUTPUT DIRECTORY WILL BE AT LEAST 8 GBs */;
+
 ////////////////////////////////////////////////////////////////////////////////
 clear*;
 set more 1;
-global basedir /Users/Brian/Documents/GitHub/HandToMouth/CEX;
+global basedir /Users/brianlivingston/Documents/GitHub/HandToMouth/CEX;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD DIRECTORY;

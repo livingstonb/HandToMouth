@@ -146,14 +146,32 @@ gen obsid = _n;
 expand 5;
 gen imps = 0;
 bysort obsid: replace imps = _n;
-foreach impvar of varlist finatxe fincbtx fsalary ffrminc fnonfrm
-	fsmpfrx inclosa netrent intearn intrdvx finincxm royestx aliothx
+local impvars finatxe fincbtx fsalary ffrminc fnonfrm
+	fsmpfrx inclosa netrent intearn intrdvx finincx royestx aliothx
 	chdothx compens foodsmp frretir fssix othregx othrinc pension retsurv
-	unemplx welfare famtfed fsltaxx tottxpd inc_rnk pov_cy{;
+	unemplx welfare famtfed fsltaxx tottxpd inc_rnk;
+foreach impvar of local impvars {;
+	di "`impvar'";
 	gen `impvar'_imp = .;
 	forvalues i=1/5 {;
 		replace `impvar'_imp = `impvar'`i' if imps==`i';
 	};
+};
+
+rename finatxe_imp income_post_imp;
+rename fincbtx_imp income_pre_imp;
+rename imps reps;
+
+forvalues i= 1/44{;
+	if `i' < 10 {;
+		rename wtrep0`i' wt1b`i';
+	};
+	else {;
+		rename wtrep`i' wt1b`i';
+	};
+};
+forvalues i=44(-1)1 {;
+	gen mm`i' = 1;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +181,10 @@ gen 	brliqpos 		= checking + saving + stocks;
 gen 	brliqneg 		= ccdebt;
 gen		netbrliq 		= brliqpos - brliqneg;
 
-
+////////////////////////////////////////////////////////////////////////////////
+* KEEP ONLY NECESSARY VARIABLES (multiple imputations create very large dataset);
+keep year age wt* mm* reps income_post netbrliq wgt income_pre totalexp YQ
+	selfearn checking wages income_post_imp income_pre_imp;
 
 
 ////////////////////////////////////////////////////////////////////////////////
