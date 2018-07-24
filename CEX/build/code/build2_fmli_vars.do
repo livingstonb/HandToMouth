@@ -139,6 +139,23 @@ foreach zero of local zeros {;
 	replace `zero' = 0 if `zero'==.;
 };
 
+
+////////////////////////////////////////////////////////////////////////////////
+* MULTIPLE IMPUTATIONS;
+gen obsid = _n;
+expand 5;
+gen imps = 0;
+bysort obsid: replace imps = _n;
+foreach impvar of varlist finatxe fincbtx fsalary ffrminc fnonfrm
+	fsmpfrx inclosa netrent intearn intrdvx finincxm royestx aliothx
+	chdothx compens foodsmp frretir fssix othregx othrinc pension retsurv
+	unemplx welfare famtfed fsltaxx tottxpd inc_rnk pov_cy{;
+	gen `impvar'_imp = .;
+	forvalues i=1/5 {;
+		replace `impvar'_imp = `impvar'`i' if imps==`i';
+	};
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 * DEFINE NEW VARIABLES;
 
