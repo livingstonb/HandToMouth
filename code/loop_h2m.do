@@ -16,6 +16,12 @@ foreach var of local model {;
 	gen `var' = .;
 };
 
+if strmatch("$dataset","SCF")==1 {;
+	cd ${basedir}/build/temp;
+	merge m:1 YY1 year using replicates.dta, nogen;
+	gen rep = im0100;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
 forvalues spec=1(1)5 {;
@@ -50,31 +56,41 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
-	if strmatch("$dataset","SCF")==1 {;
-		* Take mean for each imputation separately;
-		preserve;
-		collapse (mean) `h2ms' [aw=wgt], by(im0100);
-		quietly mean `h2ms';
-		restore;
+	foreach h2mdef of local h2ms {;
+		scfcombo `h2mdef' [aw=wgt], command(regress) reps(200) imps(5);
+		if "`h2mdef'"=="h2m" {;
+			matrix h2mrobust = e(b);
+			matrix h2mrobustV = e(V);
+		};
+		else {;
+			matrix h2mrobust = h2mrobust,e(b);
+			matrix h2mrobustV = h2mrobustV,e(V);
+		};
 	};
+
 	else {;
 		quietly mean `h2ms' [aw=wgt];
+		matrix h2mrobust = e(b);
+		matrix h2mrobustV = (.);
 	};
-	matrix coeffs = e(b);
 
 	* Store in matrix;
 	if `spec'==1 {;
-		matrix H2M = coeffs;
+		matrix H2Mrobust = h2mrobust;
+		matrix H2MrobustV = h2mrobustV;
 	};
 	else {;
-		matrix H2M = H2M\coeffs;
+		matrix H2Mrobust = H2Mrobust\h2mrobust;
+		matrix H2MrobustV = H2MrobustV\h2mrobustV;
 	};
 	
 
 	drop *h2m;
 };
+
 * Set matrix rownames;
-matrix rownames H2M = base finfrag oneycredit wkpay mopay;
+matrix rownames H2Mrobust = base finfrag oneycredit wkpay mopay;
+matrix rownames H2MrobustV = base finfrag oneycredit wkpay mopay;
 
 * Set back to baseline;
 foreach var of local model {;

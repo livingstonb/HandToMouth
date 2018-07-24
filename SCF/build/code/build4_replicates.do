@@ -4,24 +4,31 @@ clear
 // merging
 
 cd ${basedir}/build/input/replicates
-local yys 89 92 95 98 01 04 07 10 13 16 89 92 95 98
+local yys 01 89 92 95 98 04 07 10 13 16
 foreach yy of local yys {
-	if `yy' > 80 {
-		use p`yy'_rw1, clear
-		gen year =  19`yy'
-	}
-	else {
-		use p`yy'_rw1, clear
-		gen year = 20`yy'
-	}
-	
-	if `yy'==89 {
-		rename X1 Y1
-		rename XX1 YY1
-	}
-	else if `yy'==01 {
+	if `yy'==01 {
+		use p01_rw1, clear
+		gen year = 2001
 		rename wt1* mm* y1, upper
 	}
+	else {
+		append using p`yy'_rw1
+		if `yy' >= 89 {
+			replace year = 19`yy' if year==.
+		}
+		else {
+			replace year = 20`yy' if year==.
+		}
+	}
+	
+	
+	if `yy'==89 {
+		replace Y1 = X1 if year==1989
+	}
+	
 
-	save ${basedir}/build/temp/rep`yy'.dta, replace
 }
+rename WT* MM*, lower
+replace YY1 = (Y1-mod(Y1,10))/10
+save ${basedir}/build/temp/replicates.dta, replace
+

@@ -43,16 +43,12 @@ gen con0 = .;
 * Declare the dataset;
 global dataset SCF;
 
-* Turn on/off computations (1=true,anything else=false);
-global stderror 1;
-local robust 1;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do), STORE RESULTS AS MATRIX;
-if `robust' == 1 {;
-	do ${basedir}/../code/loop_h2m.do;
-};
+
+do ${basedir}/../code/loop_h2m.do;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
@@ -83,6 +79,7 @@ li, clean noobs;
 matrix list h2mV;
 
 * Robustness checks;
-matrix list H2M;
+matrix list H2Mrobust;
+matrix list H2MrobustV;
 
 
