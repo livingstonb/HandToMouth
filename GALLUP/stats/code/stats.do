@@ -33,6 +33,25 @@ gen h2m_affordneeds = .;
 replace h2m_affordneeds = 1 if affordneeds == 2;
 replace h2m_affordneeds = 0 if affordneeds == 1;
 
+/* Have there been times in the past twelve months when you did not have enough
+money to buy the food that your family needed? */
+gen h2m_buyfood = .;
+replace h2m_buyfood = 1 if buyfood == 1;
+replace h2m_buyfood = 0 if buyfood == 2;
+
+/* Have there been times in the past twelve months when you did not have enough
+money to [afford shelter]? (asked in 2008-2013 surveys)*/
+gen h2m_buyshelter = .;
+replace h2m_buyshelter = 1 if buyshelter == 1;
+replace h2m_buyshelter = 0 if buyshelter == 2;
+
+/* Have there been times in the past twelve months when you did not have enough
+money to pay for health care and/or medicines that your or your family needed? 
+(asked in 2008-2016 surveys)*/;
+gen h2m_buymedicine = .;
+replace h2m_buymedicine = 1 if buymedicine == 1;
+replace h2m_buymedicine = 0 if buymedicine == 2;
+
 * Save mean h2m statistics;
 preserve;
 collapse (mean) h2m* [aw=wgt];

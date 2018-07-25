@@ -3,8 +3,6 @@
 /* This is the main do-file to compute hand-to-mouth statistics for the
 CEX. Code written by Brian Livingston. */;
 
-/* CAUTION: BECAUSE OF THE WAY THIS CODE DEALS WITH MULTIPLE IMPUTATIONS,
-OUTPUT DIRECTORY WILL BE AT LEAST 8 GBs */;
 
 ////////////////////////////////////////////////////////////////////////////////
 clear*;

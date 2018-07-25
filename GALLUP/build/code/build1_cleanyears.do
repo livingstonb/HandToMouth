@@ -12,7 +12,7 @@ cap mkdir $basedir/build/temp;
 * SELECT WHICH VARIABLES TO KEEP;
 * Variables shared among all years;
 local commonvars region sex married workcat hispanic income dailywgt MSAwgt
-		age year month nomoneyfoodpast12 state educ race children
+		age year month buyfood state educ race children
 		INT_DATE MOTHERLODE_ID;
 		
 forvalues yr=2008(1)2017 {;
@@ -30,7 +30,7 @@ forvalues yr=2008(1)2017 {;
 	rename WP1220			age;
 	rename YEAR				year;
 	rename MONTH			month;
-	rename WP40				nomoneyfoodpast12;
+	rename WP40				buyfood;
 	rename ZIPSTATE			state;
 	rename EDUCATION 		educ;
 	rename RACE				race;
@@ -49,6 +49,16 @@ forvalues yr=2008(1)2017 {;
 	if `yr'>=2013 {;
 		rename HWB5 		moneyforeverything;
 		local yearvars `yearvars' moneyforeverything;
+	};
+	
+	if `yr'<=2013 {;
+		rename WP43			buyshelter;
+		local yearvars `yearvars' buyshelter;
+	};
+	
+	if `yr'<=2016 {;
+		rename M1			buymedicine;
+		local yearvars `yearvars' buymedicine;
 	};
 	
 	keep `commonvars' `yearvars';

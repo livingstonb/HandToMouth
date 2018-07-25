@@ -18,7 +18,7 @@ forvalues yr=2009(1)2017 {;
 ////////////////////////////////////////////////////////////////////////////////
 * ENFORCE MISSING VALUES;
 
-local missing34 hispanic nomoneyfoodpast12 majorpurchase cuttingback
+local missing34 hispanic buyfood buyshelter buymedicine majorpurchase cuttingback
 	morethanenoughmoney affordneeds;
 foreach missvar of local missing34 {;
 	replace `missvar' = . if inlist(`missvar',3,4);
