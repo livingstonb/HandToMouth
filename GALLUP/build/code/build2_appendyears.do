@@ -52,6 +52,9 @@ rename 	MOTHERLODE_ID 	id;
 /* Normalize weights since sums are dramatically different depending on year */;
 bysort INT_DATE: egen dwgtsum = sum(dailywgt);
 replace dailywgt = dailywgt/dwgtsum;
+bysort year: egen MSAsum = sum(MSAwgt);
+replace dailywgt = MSAwgt/MSAsum;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE AND REMOVE TEMP FILES;

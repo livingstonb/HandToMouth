@@ -4,12 +4,11 @@
 labelled XXXXX_h2m. Means are computed by year and for the pooled sample */;
 
 * Get  pooled means;
-/*
 foreach h2mvar of varlist *h2m  {;
 	quietly mean(`h2mvar') [aw=wgt];
 	matrix pooled = e(b);
 	scalar scpooled_`h2mvar' = pooled[1,1];
-} */;
+};
 
 if ("$dataset"=="CEX") {;
 	local h2ms h2m;
@@ -35,17 +34,17 @@ else {;
 transposing back */;
 xpose, clear varname;
 
-* gen pooled = 0;
+gen pooled = 0;
 egen average = rowmean(v*);
 
 xpose, clear;
 replace year = 0 if year < 1;
 tostring year, replace;
 
-/* replace year = "Pooled" if _n == _N;
+replace year = "Pooled" if _n == _N-1;
 foreach h2mvar of varlist *h2m  {;
-	replace `h2mvar' = scpooled_`h2mvar' if _n == _N;
-} */;
+	replace `h2mvar' = scpooled_`h2mvar' if _n == _N-1;
+};
 replace year = "Mean" if _n == _N;
 
 foreach var of varlist *h2m {;

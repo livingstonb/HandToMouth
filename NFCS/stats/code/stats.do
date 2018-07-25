@@ -25,7 +25,7 @@ drop if inlist(agegrp,1,6); /* Use ages 25-64 */;
 * Financial fragility;
 preserve;
 collapse (mean) get2000certain (mean) get2000probably (mean) get2000probablynot
-	(mean) get2000not [aw=wgt], by(year);
+	(mean) get2000not;
 save ${basedir}/stats/output/NFCS_get2000.dta, replace;
 restore;
 
@@ -85,7 +85,7 @@ li, clean noobs;
 
 * h2m stats;
 quietly {;
-use ${basedir}/stats/output/NFCS_h2mstat, clear;
+use ${basedir}/stats/output/NFCSh2m_yearly, clear;
 rename spendinc_h2m 		spendinc;
 rename paybills_h2m 		paybills;
 rename rainyday_h2m 		rainyday;
