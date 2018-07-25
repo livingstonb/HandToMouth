@@ -4,8 +4,7 @@ set more 1;
 cd $basedir/build/output;
 use SCF_89_16_cleaned.dta, clear;
 cap mkdir $basedir/stats/output;
-set trace on;
-set tracedepth 1;
+
 /* This is the main do-file for computing hand-to-mouth statistics for the SCF.*/;
 
 /* Output:
@@ -59,6 +58,7 @@ gen liqvar = LIQVAR;
 gen payfreq = PAYFREQ;
 gen illiqvar = ILLIQVAR;
 gen nwvar = NWVAR;
+gen consumption = CONSUMPTION;
 global borrowlimtype $BORROWLIMTYPE;
 global h2mtype	$H2MTYPE;
 
@@ -92,7 +92,7 @@ do plots_SCF_PSID.do;
 * SAVE MATRICES
 * Baseline;
 cd ${basedir}/stats/output;
-use SCFh2m_yearly.dta;
+use SCFh2m_yearly.dta, clear;
 list, clean noobs;
 clear;
 

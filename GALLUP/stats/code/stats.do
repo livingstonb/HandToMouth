@@ -48,7 +48,7 @@ do stats_plots.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * DISPLAY RESULTS IN COMMAND WINDOW;
-use ${basedir}/stats/output/GALLUP_h2mstat.dta, clear;
+use ${basedir}/stats/output/GALLUPh2m.dta, clear;
 foreach h2mvar of varlist h2m* {;
 	di "`h2mvar' = " `h2mvar';
 };
