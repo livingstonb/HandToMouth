@@ -89,7 +89,7 @@ forvalues spec=1(1)5 {;
 	replace payfreq = PAYFREQ;
 	replace illiqvar = ILLIQVAR;
 	replace nwvar = NWVAR;
-	replace con = CON;
+	replace consumption = CONSUMPTION;
 	global borrowlimtype 	$BORROWLIMTYPE;
 	global h2mtype			$H2MTYPE;
 };

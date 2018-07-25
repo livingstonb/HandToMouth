@@ -36,7 +36,7 @@ global 	BORROWLIMTYPE normal;
 * h2m type (normal,finfrag);
 global 	H2MTYPE normal;
 * Select consumption variable;
-gen 	CON 		= ndur;
+gen 	CONSUMPTION 		= ndur;
 * Declare the dataset;
 global dataset PSID;
 
@@ -50,7 +50,7 @@ gen liqvar = LIQVAR;
 gen payfreq = PAYFREQ;
 gen illiqvar = ILLIQVAR;
 gen nwvar = NWVAR;
-gen con = CON;
+gen consumption = CONSUMPTION;
 global borrowlimtype $BORROWLIMTYPE;
 global h2mtype	$H2MTYPE;
 

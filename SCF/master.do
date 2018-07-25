@@ -45,4 +45,5 @@ do ${basedir}/build/code/build3_gendata.do
 // produce final output
 do ${basedir}/stats/code/stats.do
 
-
+// HtM and direct survey questions
+do ${basedir}/stats/code/stats_directquestions.do

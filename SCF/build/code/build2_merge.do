@@ -266,12 +266,12 @@ replace CPILAG = 2395/2363 if year == 1998
 replace CPILAG = 2253/2200 if year == 1995
 replace CPILAG = 2102/2051 if year == 1992
 replace CPILAG = 1886/1807 if year == 1989
-}
+
 local lagvars hh_earnings hh_selfy uiben childben tanf ssinc othinc labinc labincplus supportpmt usuallabinc
 foreach lagvar of local lagvars {
 replace `lagvar'=`lagvar'*CPILAG
 }
-
+}
 ///////////////////////////////////////////////////////////////////////////////
 // deflates relevant data into 2010 terms using the CPI-U-RS http://www.bls.gov/cpi/cpiursai1978_2010.pdf
 //use September values for each year (around when the survey was done)

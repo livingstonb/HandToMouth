@@ -45,7 +45,7 @@ global BORROWLIMTYPE normal;
 * h2m type (normal,finfrag);
 global 	H2MTYPE normal;
 * Select consumption variable;
-gen CON 	= totalexp/0.7;
+gen CONSUMPTION 	= totalexp/0.7;
 * Declare the dataset;
 global dataset CEX;
 
@@ -62,7 +62,7 @@ gen liqvar = LIQVAR;
 gen payfreq = PAYFREQ;
 gen illiqvar = ILLIQVAR;
 gen nwvar = NWVAR;
-gen con = CON;
+gen consumption = CONSUMPTION;
 global borrowlimtype $BORROWLIMTYPE;
 global h2mtype	$H2MTYPE;
 
@@ -101,7 +101,7 @@ graph export ${dataset}_h2m_age.png, replace;
 ////////////////////////////////////////////////////////////////////////////////
 * CONSUMPTION HTM;
 preserve;
-drop if CON == 0;
+drop if CONSUMPTION == 0;
 local samplesize_consumption = _N;
 do ${basedir}/../code/compute_h2m_consumption.do;
 cd $basedir/../code;

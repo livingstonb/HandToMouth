@@ -4,7 +4,8 @@ set more 1;
 cd $basedir/build/output;
 use SCF_89_16_cleaned.dta, clear;
 cap mkdir $basedir/stats/output;
-
+set trace on;
+set tracedepth 1;
 /* This is the main do-file for computing hand-to-mouth statistics for the SCF.*/;
 
 /* Output:
@@ -26,7 +27,7 @@ drop if (labearn1 == 0 & selfearn1>0) | (labearn2 == 0 &  selfearn2>0);
 
 ////////////////////////////////////////////////////////////////////////////////
 * SELECT WHETHER TO COMPUTE STANDARD ERRORS;
-global stderrors 0;
+global stderrors 1;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Select which income variable to use (labinc,netlabinc);
@@ -47,7 +48,7 @@ global BORROWLIMTYPE normal;
 * h2m type (normal,commconsbeg,commconsend,finfrag);
 global H2MTYPE normal;
 * Select consumption variable;
-gen CON = .;
+gen CONSUMPTION = .;
 * Declare the dataset;
 global dataset SCF;
 
