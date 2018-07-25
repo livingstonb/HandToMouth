@@ -53,7 +53,7 @@ rename 	MOTHERLODE_ID 	id;
 bysort INT_DATE: egen dwgtsum = sum(dailywgt);
 replace dailywgt = dailywgt/dwgtsum;
 bysort year: egen MSAsum = sum(MSAwgt);
-replace dailywgt = MSAwgt/MSAsum;
+replace MSAwgt = MSAwgt/MSAsum;
 
 
 ////////////////////////////////////////////////////////////////////////////////
