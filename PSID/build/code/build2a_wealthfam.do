@@ -350,8 +350,12 @@ rename headage 	age;
 rename spage 	agew;
 rename stateres state;
 
-replace headage = . if headage == 999;
-replace spage = . if spage == 999 | spage == 0;
+replace headage = . if headage == 99 & year <= 1995;
+replace headage = . if headage == 98 & year == 1995; 
+replace headage = . if headage == 999 & year > 1995;
+replace spage = . if spage == 99 & year <= 1995;
+replace spage = . if spage == 999 & year > 1995;
+replace spage = . if spage == 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
