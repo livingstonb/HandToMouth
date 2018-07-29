@@ -350,6 +350,9 @@ rename headage 	age;
 rename spage 	agew;
 rename stateres state;
 
+replace headage = . if headage == 999;
+replace spage = . if spage == 999 | spage == 0;
+
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
 cd $basedir/build/temp;
