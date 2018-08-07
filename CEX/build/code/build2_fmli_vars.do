@@ -138,13 +138,20 @@ foreach zero of local zeros {;
 	replace `zero' = 0 if `zero'==.;
 };
 
+////////////////////////////////////////////////////////////////////////////////
+* KEEP ONLY NECESSARY VARIABLES (multiple imputations create very large dataset);
+keep year age income_post wgt income_pre totalexp YQ saving stocks ccdebt
+	selfearn checking wages finatxe* fincbtx* wtrep*;
 
 ////////////////////////////////////////////////////////////////////////////////
 * MULTIPLE IMPUTATIONS;
 gen obsid = _n;
 expand 5;
-gen imps = 0;
-bysort obsid: replace imps = _n;
+gen imps = 1 if mod(obsid,5) == 1;
+replace imps = 2 if mod(obsid,5) == 2;
+replace imps = 3 if mod(obsid,5) == 3;
+replace imps = 4 if mod(obsid,5) == 4;
+replace imps = 5 if mod(obsid,5) == 0;
 * add imputations only for necessary variables (saves a lot of time);
 local impvars finatxe fincbtx; /* fsalary ffrminc fnonfrm
 	fsmpfrx inclosa netrent intearn intrdvx finincx royestx aliothx
@@ -170,6 +177,7 @@ forvalues i= 1/44{;
 		rename wtrep`i' wt1b`i';
 	};
 };
+
 forvalues i=44(-1)1 {;
 	gen mm`i' = 1;
 };
@@ -180,11 +188,6 @@ forvalues i=44(-1)1 {;
 gen 	brliqpos 		= checking + saving + stocks;
 gen 	brliqneg 		= ccdebt;
 gen		netbrliq 		= brliqpos - brliqneg;
-
-////////////////////////////////////////////////////////////////////////////////
-* KEEP ONLY NECESSARY VARIABLES (multiple imputations create very large dataset);
-keep year age wt* mm* reps income_post netbrliq wgt income_pre totalexp YQ
-	selfearn checking wages income_post_imp income_pre_imp;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE;
