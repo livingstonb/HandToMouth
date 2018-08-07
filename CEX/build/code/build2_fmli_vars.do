@@ -30,9 +30,6 @@ gen YQ = quarterly(qdate,"YQ");
 format YQ %tq;
 tsset id YQ;
 
-* DROP UNECESSARY OBSERVATIONS FOR SPEED;
-drop if (YQ < quarterly("2013 Q2","YQ"));
-
 * Wealth variables;
 gen		ccdebt		= .;				
 replace	ccdebt		= 0 	if creditb=="1";			/* 2013q2- */;
