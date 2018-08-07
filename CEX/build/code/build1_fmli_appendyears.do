@@ -2,13 +2,10 @@
 clear*;
 set more 1;
 cap mkdir ${basedir}/build/temp;
-
 ////////////////////////////////////////////////////////////////////////////////
 
-local firstyear 03;
-local lastyear	16;
 * Create yearly datasets first;
-forvalues yy = `firstyear'/`lastyear' {;
+foreach yy of numlist 97/99 0/16 {;
 	forvalues q = 1/4 {;
 		di "Reading `yy'q`q'";
 		if (`yy'>=0) & (`yy'<=9) & (`q'==1) {;
@@ -41,7 +38,7 @@ forvalues yy = `firstyear'/`lastyear' {;
 		destring newid, replace;
 	};
 	if `yy' > 90 {;
-		local yr 19`yy';
+		local yyyy 19`yy';
 	};
 	else if `yy'>=10 {;
 		local yyyy 20`yy';
@@ -54,10 +51,8 @@ forvalues yy = `firstyear'/`lastyear' {;
 };
 
 * Append years;
-local firstyear 2003;
-local lastyear	2016;
-forvalues yyyy = `firstyear'(1)`lastyear' {;
-	if `yyyy'==`firstyear' {;
+foreach yyyy of numlist 1997/2016 {;
+	if `yyyy'==1997 {;
 		use ${basedir}/build/temp/fmli`yyyy', clear;
 	};
 	else {;
