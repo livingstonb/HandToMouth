@@ -18,7 +18,7 @@ cd $basedir/build/temp
 save fam1b, replace
 
 // ASSUME ALL INCOME IS LABOR INCOME WHEN CALCULATING FTAX
-keep ftaxid year state marit kids age agew y ly wly asset tyhw tyoth childcare intid ndur
+keep ftaxid year state marit kids age agew y ly wly asset tyhw tyoth childcare intid ndur truncw
 
 gen stmp = state
 replace stmp = stmp+1 if stmp>1 & stmp!=. //Alaska is 50 in PSID
@@ -45,7 +45,7 @@ gen swages = y*0.5
 gen depchild = kids
 
 // if having problems with taxsim, set taxsim = 0
-scalar taxsim = 1
+scalar taxsim = 0
 if taxsim == 1 {
 	taxsim9, replace
 
