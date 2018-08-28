@@ -22,6 +22,7 @@ gen nethouse    = housepos - houseneg
 gen heloc_lim   = nethouse + heloc
 replace heloc_lim = 0 if heloc_lim < 0
 gen netcars     = vehic
+gen selfearn	= hh_selfy
 // france puts cars and other valuables together
 replace netcars = da1131 if sa0100 == "FR"
 

@@ -4,16 +4,28 @@
 compute_h2m each time and storing the results in a matrix */;
 
 * Initialize;
-if ("$dataset"=="CEX") {;
+if "$dataset"=="CEX" {;
 	local h2ms h2m;
 };
 else {;
 	local h2ms h2m Wh2m Ph2m NWh2m;
 };
 
-if ("$dataset"=="SCF") {;
+if "$dataset"=="SCF" {;
 	cd ${basedir}/build/temp;
 	merge m:1 YY1 year using replicates.dta, nogen;
+	gen rep = im0100;
+};
+else if "$dataset"=="HFCS" {;
+	cd ${basedir}/build/temp;
+	merge m:1 id using ${basedir}/build/input/HFCS1_3/W.dta, nogen;
+	local count = 1;
+	foreach var of varlist wr* {;
+		rename `var' wt1b`count';
+		local countback = 1000 - `count';
+		gen mm`countback' = 1;
+		local count = `count' + 1;
+	};
 	gen rep = im0100;
 };
 ////////////////////////////////////////////////////////////////////////////////
@@ -45,7 +57,7 @@ forvalues spec=1(1)5 {;
 	cd $basedir/../code;
 	do compute_h2m.do;
 	if ${stderrors}==1 {;
-		if "${dataset}"=="SCF" {;
+		if inlist("${dataset}","SCF","HFCS") {;
 			local totalreps 200;
 		};
 		else if "${dataset}"=="CEX" {;
