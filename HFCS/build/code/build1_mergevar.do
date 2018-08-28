@@ -328,7 +328,7 @@ label values famstruct famlab
 
 gen college = (edcat >= 5)
 
-rename hw0010 fwgt
+rename hw0010 wgt
 
 ////////////////////////////////////////////////////////////////////////////////
 

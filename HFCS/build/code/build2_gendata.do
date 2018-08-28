@@ -1,11 +1,12 @@
 cd ${basedir}/build/temp
-use HFCS.dta
+use HFCS.dta, clear
 cap mkdir ${basedir}/build/output
 
 merge m:1 id im0100 using ${basedir}/build/temp/cash.dta
 
 gen labincwork = .
 replace labincwork = labinc if age<=59
+
 
 *-----------------
 *DEFINITIONS

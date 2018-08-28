@@ -25,7 +25,7 @@ drop if labinc<0;
 drop if labinc == 0 & selfearn>0;
 
 * select country;
-keep if sa0100 == ${country};
+keep if sa0100 == "$country";
 
 ////////////////////////////////////////////////////////////////////////////////
 * SELECT WHETHER TO COMPUTE STANDARD ERRORS;
@@ -39,7 +39,7 @@ gen CLIM = 1;
 * Select which liquid assets variable to use (netbrliq);
 gen LIQVAR = netbrliq;
 * Select pay frequency (n = n paychecks/month);
-drop payfreq;
+cap drop payfreq;
 gen PAYFREQ = 2;
 * Select illiquid wealth variable (familliqnv, familliqvehic);
 gen ILLIQVAR = netbrilliqnc;
@@ -83,7 +83,7 @@ preserve;
 cd $basedir/../code;
 do yearly_h2m.do;
 cd $basedir/stats/output;
-save HFCSh2m_yearly.dta, replace;
+save HFCSh2m_yearly_${country}.dta, replace;
 restore;
 
 * Plots;
@@ -100,7 +100,7 @@ list, clean noobs;
 clear;
 
 svmat H2Mrobust, names(col);
-save HFCSrobust.dta, replace;
+save HFCSrobust_${country}.dta, replace;
 clear;
 
 * Compute and save std errors;
@@ -109,7 +109,7 @@ svmat H2MrobustV, names(col);
 foreach var of varlist *h2m {;
 	replace `var' = sqrt(`var')
 };
-save HFCSrobust_stderrors.dta, replace;
+save HFCSrobust_stderrors_${country}.dta, replace;
 };
 
 matrix list H2Mrobust;
