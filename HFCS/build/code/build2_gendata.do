@@ -1,5 +1,6 @@
 cd ${basedir}/build/temp
-use HFCS.dta, clear
+use HFCS1.dta, clear
+append using HFCS2.dta
 cap mkdir ${basedir}/build/output
 
 merge m:1 id im0100 using ${basedir}/build/temp/cash.dta
