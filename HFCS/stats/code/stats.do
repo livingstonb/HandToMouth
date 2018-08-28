@@ -86,16 +86,12 @@ cd $basedir/stats/output;
 save HFCSh2m_yearly_${country}.dta, replace;
 restore;
 
-* Plots;
-
-cd $basedir/../code;
-do plots_HFCS_PSID.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE MATRICES
 * Baseline;
 cd ${basedir}/stats/output;
-use HFCSh2m_yearly.dta, clear;
+use HFCSh2m_yearly_${country}.dta, clear;
 list, clean noobs;
 clear;
 
@@ -107,7 +103,7 @@ clear;
 if ${stderrors}==1 {;
 svmat H2MrobustV, names(col);
 foreach var of varlist *h2m {;
-	replace `var' = sqrt(`var')
+	replace `var' = sqrt(`var');
 };
 save HFCSrobust_stderrors_${country}.dta, replace;
 };

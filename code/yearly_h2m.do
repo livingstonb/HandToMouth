@@ -3,6 +3,10 @@
 /* This do-file computes mean h2m for any variety of h2m statistics
 labelled XXXXX_h2m. Means are computed by year and for the pooled sample */;
 
+if "$dataset"=="HFCS" {;
+	gen year = wave;
+};
+
 * Get  pooled means;
 foreach h2mvar of varlist *h2m  {;
 	quietly mean(`h2mvar') [aw=wgt];
@@ -49,4 +53,8 @@ replace year = "Mean" if _n == _N;
 
 foreach var of varlist *h2m {;
 	replace `var' = round(`var',0.001);
+};
+
+if "$dataset"=="HFCS" {;
+	rename year wave;
 };
