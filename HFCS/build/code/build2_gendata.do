@@ -12,7 +12,8 @@ replace labincwork = labinc if age<=59
 *-----------------
 *DEFINITIONS
 *-----------------
-gen cashfrac 	= 139/2500 // from US
+* gen cashfrac 	= 139/2500 // from US
+gen cashfrac = 0
 gen liqpos      = checking*(1+cashfrac)
 gen liqneg      = ccdebt
 gen direct      = nmmf + stocks + bond
