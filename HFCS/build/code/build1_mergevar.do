@@ -97,6 +97,8 @@ foreach wave of local waves {
 	append using HDP3_`wavenum'
 	append using HDP4_`wavenum'
 	append using HDP5_`wavenum'
+	
+
 
 	///////////////////////////////////////////////////////////////////////////////
 	// renaming credit and income variables to be similar to the SCF code
@@ -266,6 +268,7 @@ foreach wave of local waves {
 	// HICP adjustment
 	// missing dates get put at the middle quarter of the fieldwork period if no
 	// survey vintage. See section 9 of metadata documentation
+	if `wavenum'==1 {
 	replace sb1000 = "2011Q1" if missing(sb1000) & sa0100 == "AT"
 	replace sb1000 = "2010Q2" if missing(sb1000) & sa0100 == "BE"
 	replace sb1000 = "2010Q3" if missing(sb1000) & sa0100 == "CY"
@@ -281,28 +284,65 @@ foreach wave of local waves {
 	replace sb1000 = "2010Q2" if missing(sb1000) & sa0100 == "PT"
 	replace sb1000 = "2010Q4" if missing(sb1000) & sa0100 == "SI"
 	replace sb1000 = "2010Q4" if missing(sb1000) & sa0100 == "SK"
+	}
+	else if `wavenum'==2 {
+	replace sb1000 = "2014Q4" if missing(sb1000) & sa0100 == "AT"
+	replace sb1000 = "2014Q4" if missing(sb1000) & sa0100 == "BE"	
+	replace sb1000 = "2014Q2" if missing(sb1000) & sa0100 == "CY"	
+	replace sb1000 = "2014Q3" if missing(sb1000) & sa0100 == "DE"	
+	replace sb1000 = "2012Q1" if missing(sb1000) & sa0100 == "ES"	
+	replace sb1000 = "2014Q1" if missing(sb1000) & sa0100 == "FI"	
+	replace sb1000 = "2014Q4" if missing(sb1000) & sa0100 == "FR"	
+	replace sb1000 = "2014Q3" if missing(sb1000) & sa0100 == "GR"	
+	replace sb1000 = "2015Q1" if missing(sb1000) & sa0100 == "IT"	
+	replace sb1000 = "2014Q3" if missing(sb1000) & sa0100 == "LU"	
+	replace sb1000 = "2014Q1" if missing(sb1000) & sa0100 == "MT"	
+	replace sb1000 = "2014Q4" if missing(sb1000) & sa0100 == "NL"	
+	replace sb1000 = "2013Q2" if missing(sb1000) & sa0100 == "PT"	
+	replace sb1000 = "2014Q4" if missing(sb1000) & sa0100 == "SI"	
+	replace sb1000 = "2014Q1" if missing(sb1000) & sa0100 == "SK"	
+	}
+
 	// imports data on the HICP
 	merge m:1 sb1000 using "${basedir}/build/input/hicp/HICP.dta"
 	drop if _merge == 2
 	drop _merge
 
+	scalar baseHICP = 93.28833333
+	gen wealth_HICP_adj = baseHICP/HICP
+	if `wavenum'==1 {
 	// balance sheet reference period is time of interview for most countries, but
 	// for the three here is end of year of 2010 (IT) and 2009 (NT and FI)
-	gen wealth_HICP_adj = 109.83339/HICP
-	replace wealth_HICP_adj = 109.83339/110.92471 if sa0100 == "IT"
-	replace wealth_HICP_adj = 109.83339/108.5486 if sa0100 == "NL"
-	replace wealth_HICP_adj = 109.83339/108.5486 if sa0100 == "FI"
-
+	// baseHICP taken to be 2010 average
+	replace wealth_HICP_adj = baseHICP/94.22 if sa0100 == "IT"
+	replace wealth_HICP_adj = baseHICP/92.19 if sa0100 == "NL"
+	replace wealth_HICP_adj = baseHICP/92.19 if sa0100 == "FI"
 	// most income reference period is 2009 except ES (2007), IT (2010), and
 	// MT,SI,FI (last 12 months)
-	gen inc_HICP_adj = 109.83339/108.085704166667
-	replace inc_HICP_adj = 109.83339/104.3602425 if sa0100 == "ES"
-	replace inc_HICP_adj = 109.83339/109.83339 if sa0100 == "IT"
+	gen inc_HICP_adj = baseHICP/91.80083333
+	replace inc_HICP_adj = baseHICP/88.64583333 if sa0100 == "ES"
+	replace inc_HICP_adj = baseHICP/baseHICP if sa0100 == "IT"
 	// denominator is average of HICP 12 months back from center of reference period
-	replace inc_HICP_adj = 109.83339/108.025559166667 if sa0100 == "GR"
-	replace inc_HICP_adj = 109.83339/109.83339 if sa0100 == "MT"
-	replace inc_HICP_adj = 109.83339/109.293695 if sa0100 == "SI"
+	replace inc_HICP_adj = baseHICP/91.75 if sa0100 == "GR"
+	replace inc_HICP_adj = baseHICP/baseHICP if sa0100 == "MT"
+	replace inc_HICP_adj = baseHICP/92.82583333 if sa0100 == "SI"
+	}
+	else if `wavenum'==2 {
+	// balance sheet reference period
+	replace wealth_HICP_adj = baseHICP/99.67 if sa0100 == "IT"
+	replace wealth_HICP_adj = baseHICP/99.83 if sa0100 == "NL"
+	replace wealth_HICP_adj = baseHICP/99.83 if sa0100 == "FI"
 
+	// most income reference periods 2013
+	gen inc_HICP_adj = baseHICP/99.53916667
+	// different reference periods
+	replace inc_HICP_adj = baseHICP/93.28833333 if sa0100 == "ES"
+	replace inc_HICP_adj = baseHICP/99.96416667 if sa0100 == "IT"
+	replace inc_HICP_adj = baseHICP/99.96416667 if sa0100 == "FR"
+	replace inc_HICP_adj = baseHICP/98.2175 if sa0100 == "PT"
+	// denominator is average of HICP 12 months back from center of reference period
+	replace inc_HICP_adj = baseHICP/99.87 if sa0100 == "GR"
+	}
 
 	foreach k of varlist checking nmmf stocks bond deq houses oresre heloc resdbt ///
 	vehic cds othfin othma othnfin cashli bus ccdebt hhloan{
