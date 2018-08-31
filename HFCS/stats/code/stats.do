@@ -27,6 +27,7 @@ drop if labinc == 0 & selfearn>0;
 * select country;
 keep if sa0100 == "$country";
 
+
 ////////////////////////////////////////////////////////////////////////////////
 * SELECT WHETHER TO COMPUTE STANDARD ERRORS;
 global stderrors 1;
