@@ -24,6 +24,7 @@ foreach wave of local waves {
 	use HN1, clear
 	keep id survey sa0010 sa0100 im0100 hnj3800 fhnj3800 hng0710 fhng0710 
 	keep if sa0100 == "ES" | sa0100 == "IT"
+	gen wave = `wavenum'
 	save ${basedir}/build/temp/cash`wavenum'.dta, replace
 
 	foreach k of numlist 2/5{
