@@ -11,14 +11,15 @@ else {;
 	local h2ms h2m Wh2m Ph2m NWh2m;
 };
 
-if "$dataset"=="SCF" {;
+if "$dataset"=="SCF" & ${stderrors}==1 {;
 	cd ${basedir}/build/temp;
 	merge m:1 YY1 year using replicates.dta, nogen;
 	gen rep = im0100;
 };
-else if "$dataset"=="HFCS" {;
+else if "$dataset"=="HFCS" & ${stderrors}==1 {;
 	cd ${basedir}/build/temp;
-	merge m:1 id using ${basedir}/build/input/HFCS1_3/W.dta, nogen;
+	merge m:1 id wave using ${basedir}/build/input/HFCS1_3/W.dta, nogen;
+	merge m:1 id wave using ${basedir}/build/input/HFCS2_1/W.dta, nogen;
 	local count = 1;
 	foreach var of varlist wr* {;
 		rename `var' wt1b`count';
@@ -28,6 +29,10 @@ else if "$dataset"=="HFCS" {;
 	};
 	gen rep = im0100;
 };
+else if "$dataset"=="HFCS" & ${stderrors}==0 {;
+	keep if im0100 == 1;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
 forvalues spec=1(1)5 {;
@@ -74,18 +79,18 @@ forvalues spec=1(1)5 {;
 				matrix h2mrobustV = h2mrobustV,e(V);
 			};
 		};
-		if "$dataset"=="HFCS" & "$country"=="FR" & `spec'==1 {;
-			* Create matrix for first country;
-			matrix samplesize = r(N);
-		};
-		else if "$dataset"=="HFCS" & `spec'==1 {;
-			matrix samplesize = samplesize,e(N);
-		};
 	};
 	else {;
 		quietly mean `h2ms' [aw=wgt];
 		matrix h2mrobust = e(b);
 		matrix h2mrobustV = (.,.,.,.,.);
+	};
+	
+	if `spec'==1 {;
+		scalar samplesize = e(N);
+		if inlist("$dataset","CEX","SCF","PSID") {;
+			save ${basedir}/stats/output/N, replace;
+		};
 	};
 
 	* Store in matrix;
