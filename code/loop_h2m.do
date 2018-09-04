@@ -29,9 +29,6 @@ else if "$dataset"=="HFCS" & ${stderrors}==1 {;
 	};
 	gen rep = im0100;
 };
-else if "$dataset"=="HFCS" & ${stderrors}==0 {;
-	keep if im0100 == 1;
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
@@ -86,11 +83,17 @@ forvalues spec=1(1)5 {;
 		matrix h2mrobustV = (.,.,.,.,.);
 	};
 	
+	* Record sample size;
+	count if im0100==1 & h2m<.;
 	if `spec'==1 {;
-		scalar samplesize = e(N);
-		if inlist("$dataset","CEX","SCF","PSID") {;
-			save ${basedir}/stats/output/N, replace;
-		};
+		matrix samplesize = r(N);
+	};
+	else {;
+		matrix samplesize = samplesize\r(N);
+	};
+	
+	if (`spec'==5) & inlist("$dataset","SCF","PSID","CEX") {;
+		outsheet using ${basedir}/stats/output/N.csv, comma replace;
 	};
 
 	* Store in matrix;

@@ -71,6 +71,7 @@ do ${basedir}/../code/loop_h2m.do;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;
+
 * Compute h2m statistics here;
 cd $basedir/../code;
 do compute_h2m.do;
@@ -84,10 +85,29 @@ save SCFh2m_yearly.dta, replace;
 restore;
 
 * Plots;
-
 cd $basedir/../code;
 do plots_SCF_PSID.do;
+cd $basedir/stats/output;
 
+drop *h2m;
+////////////////////////////////////////////////////////////////////////////////
+* MONTHLY PAY SPECIFICATION - COMPUTE H2M BY YEAR;
+
+* Compute h2m statistics here;
+cd $basedir/../code;
+replace payfreq = 1;
+do compute_h2m.do;
+
+* Average h2m by year;
+preserve;
+cd $basedir/../code;
+do yearly_h2m.do;
+cd $basedir/stats/output;
+save SCFh2m_yearly_monthpay.dta, replace;
+restore;
+
+replace payfreq = PAYFREQ;
+drop *h2m;
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE MATRICES
 * Baseline;
@@ -96,17 +116,21 @@ use SCFh2m_yearly.dta, clear;
 list, clean noobs;
 clear;
 
+svmat samplesize;
+outsheet using N.csv, comma replace;
+clear;
+
 svmat H2Mrobust, names(col);
 save SCFrobust.dta, replace;
 clear;
 
 * Compute and save std errors;
 if ${stderrors}==1 {;
-svmat H2MrobustV, names(col);
-foreach var of varlist *h2m {;
-	replace `var' = sqrt(`var')
-};
-save SCFrobust_stderrors.dta, replace;
+	svmat H2MrobustV, names(col);
+	foreach var of varlist *h2m {;
+		replace `var' = sqrt(`var');
+	};
+	save SCFrobust_stderrors.dta, replace;
 };
 
 matrix list H2Mrobust;

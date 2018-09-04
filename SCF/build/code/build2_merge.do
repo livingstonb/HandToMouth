@@ -127,12 +127,13 @@ replace htm1 = 1 if nosavebor==1 | nosavezero==1
 
 rename X7510 spendmorey
 rename X7509 buyhome
+rename X7508 spendexceedy
 
 gen htm5 = .
 replace htm5 = 0 if spendmorey == 3
 replace htm5 = 1 if (spendmorey==1 | spendmorey==2) & (buyhome==5 | buyhome == 0)
-replace htm5 = 1 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (X7508 == 1 | X7508 == 2)
-replace htm5 = 0 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (X7508 == 3 | X7508 == 0)
+replace htm5 = 1 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (spendexceedy == 1 | spendexceedy == 2)
+replace htm5 = 0 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (spendexceedy == 3 | spendexceedy == 0)
 
 // committed consumption: any regularly occurring bulk payment
 // converted to monthly payments

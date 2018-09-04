@@ -39,6 +39,9 @@ do ${basedir}/build/code/build2_merge.do
 // Defines relevant variables for the HtM calculations, save cleaned dataset
 do ${basedir}/build/code/build3_gendata.do
 
+// Append replicate weights into one file
+do ${basedir}/build/code/build4_replicates.do
+
 ////////////////////////////////////////////////////////////////////////////////
 // 3. Compute fraction HtM ("stats" directory)
 // process the the output from build directory, SCF_89_16_cleaned.dta, and

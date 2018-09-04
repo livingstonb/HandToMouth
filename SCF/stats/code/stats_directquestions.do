@@ -21,8 +21,8 @@ less than your income? -- copied from Justin Weidner's code */;
 gen spendmore_h2m = .;
 replace spendmore_h2m = 0 if spendmorey == 3;
 replace spendmore_h2m = 1 if (spendmorey==1 | spendmorey==2) & (buyhome==5 | buyhome == 0);
-replace spendmore_h2m = 1 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (X7508 == 1 | X7508 == 2);
-replace spendmore_h2m = 0 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (X7508 == 3 | X7508 == 0);
+replace spendmore_h2m = 1 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (spendexceedy == 1 | spendexceedy == 2);
+replace spendmore_h2m = 0 if (spendmorey==1 | spendmorey==2) & buyhome==1 & (spendexceedy == 3 | spendexceedy == 0);
 
 /* Don't save - usually spend more than income OR don't save - usually spend
 as much as income */;
