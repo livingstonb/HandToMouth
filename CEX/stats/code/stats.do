@@ -112,6 +112,10 @@ restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
+svmat samplesize;
+outsheet using N.csv, comma replace;
+clear;
+
 * Baseline;
 cd ${basedir}/stats/output;
 di "BASELINE H2M:";

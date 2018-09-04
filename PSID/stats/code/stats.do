@@ -101,10 +101,15 @@ cd $basedir/stats/output;
 restore;
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
+svmat samplesize;
+outsheet using N.csv, comma replace;
+clear;
+
 * Baseline;
 cd ${basedir}/stats/output;
 use PSIDh2m_yearly.dta, clear;
 li, clean noobs;
+
 
 * Robustness checks;
 clear;

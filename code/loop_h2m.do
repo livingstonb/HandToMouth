@@ -92,9 +92,6 @@ forvalues spec=1(1)5 {;
 		matrix samplesize = samplesize\r(N);
 	};
 	
-	if (`spec'==5) & inlist("$dataset","SCF","PSID","CEX") {;
-		outsheet using ${basedir}/stats/output/N.csv, comma replace;
-	};
 
 	* Store in matrix;
 	if `spec'==1 {;
