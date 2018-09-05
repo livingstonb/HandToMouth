@@ -218,7 +218,7 @@ if having problems, its probably your firewall as the website says. Select
 taxsim = 0 below to skip taxsim section.
 */
 
-scalar taxsim = 1
+scalar taxsim = 0
 
 // sets up required variables for TAXSIM
 // Assumes that everyone files as single with no dependents

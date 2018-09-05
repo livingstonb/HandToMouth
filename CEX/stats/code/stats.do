@@ -52,7 +52,7 @@ global dataset CEX;
 * Estimate standard errors?;
 global stderrors = 1;
 if $stderrors == 1 {;
-	replace INCVAR = income_post_imp;
+	replace INCVAR = imp_income_post;
 };
 
 * Set to baseline;

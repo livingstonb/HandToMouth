@@ -159,14 +159,14 @@ local impvars finatxe fincbtx; /* fsalary ffrminc fnonfrm
 	unemplx welfare famtfed fsltaxx tottxpd inc_rnk */;
 foreach impvar of local impvars {;
 	di "`impvar'";
-	gen `impvar'_imp = .;
+	gen imp_`impvar' = .;
 	forvalues i=1/5 {;
-		replace `impvar'_imp = `impvar'`i' if imps==`i';
+		replace imp_`impvar' = `impvar'`i' if imps==`i';
 	};
 };
 
-rename finatxe_imp income_post_imp;
-rename fincbtx_imp income_pre_imp;
+rename imp_finatxe imp_income_post;
+rename imp_fincbtx imp_income_pre;
 rename imps reps;
 gen im0100 = reps;
 
