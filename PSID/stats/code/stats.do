@@ -101,6 +101,7 @@ cd $basedir/stats/output;
 restore;
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
+clear;
 svmat samplesize;
 outsheet using N.csv, comma replace;
 clear;

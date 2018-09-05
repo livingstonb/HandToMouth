@@ -29,6 +29,9 @@ else if "$dataset"=="HFCS" & ${stderrors}==1 {;
 	};
 	gen rep = im0100;
 };
+else if "$dataset"=="PSID" {;
+gen im0100 = 1;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP OVER ALTERNATIVE SPECIFICATIONS;
@@ -58,7 +61,7 @@ forvalues spec=1(1)5 {;
 	* Compute h2m statistics here;
 	cd $basedir/../code;
 	do compute_h2m.do;
-	if ${stderrors}==1 {;
+	if ${stderrors}==1 & inlist("${dataset}","SCF","HFCS","CEX") {;
 		if inlist("${dataset}","SCF","HFCS") {;
 			local totalreps 200;
 		};
