@@ -112,6 +112,7 @@ restore;
 
 ////////////////////////////////////////////////////////////////////////////////
 * SHOW RESULTS IN COMMAND WINDOW;
+clear;
 svmat samplesize;
 outsheet using N.csv, comma replace;
 clear;
@@ -146,8 +147,5 @@ save CEXrobust_stderrors.dta, replace;
 
 matrix list H2Mrobust;
 if ${stderrors}==1 {;
-matrix list H2MrobustV;
+	matrix list H2MrobustV;
 };
-
-di "SAMPLE SIZE (BASELINE) = " `samplesize';
-di "SAMPLE SIZE (CONSUMPTION) = " `samplesize_consumption';

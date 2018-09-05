@@ -168,6 +168,7 @@ foreach impvar of local impvars {;
 rename finatxe_imp income_post_imp;
 rename fincbtx_imp income_pre_imp;
 rename imps reps;
+gen im0100 = reps;
 
 forvalues i= 1/44{;
 	if `i' < 10 {;
