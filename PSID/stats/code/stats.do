@@ -40,8 +40,7 @@ gen 	CONSUMPTION 		= ndur;
 * Declare the dataset;
 global dataset PSID;
 
-* Cannot compute standard errors for PSID;
-global stderrors 1;
+global stderrors 0;
 
 * Set to baseline;
 gen incvar = INCVAR;
