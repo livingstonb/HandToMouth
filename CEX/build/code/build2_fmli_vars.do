@@ -140,18 +140,18 @@ foreach zero of local zeros {;
 
 ////////////////////////////////////////////////////////////////////////////////
 * KEEP ONLY NECESSARY VARIABLES (multiple imputations create very large dataset);
-keep year age income_post wgt income_pre totalexp YQ saving stocks ccdebt
+keep id year age income_post wgt income_pre totalexp YQ saving stocks ccdebt
 	selfearn checking wages finatxe* fincbtx* wtrep*;
 
 ////////////////////////////////////////////////////////////////////////////////
 * MULTIPLE IMPUTATIONS;
-gen obsid = _n;
 expand 5;
-gen imps = 1 if mod(obsid,5) == 1;
-replace imps = 2 if mod(obsid,5) == 2;
-replace imps = 3 if mod(obsid,5) == 3;
-replace imps = 4 if mod(obsid,5) == 4;
-replace imps = 5 if mod(obsid,5) == 0;
+bysort id: gen obsid = _n;
+gen imps = 1 if obsid == 1;
+replace imps = 2 if obsid == 2;
+replace imps = 3 if obsid == 3;
+replace imps = 4 if obsid == 4;
+replace imps = 5 if obsid == 5;
 * add imputations only for necessary variables (saves a lot of time);
 local impvars finatxe fincbtx; /* fsalary ffrminc fnonfrm
 	fsmpfrx inclosa netrent intearn intrdvx finincx royestx aliothx
