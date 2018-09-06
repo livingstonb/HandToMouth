@@ -3,6 +3,7 @@
 /* This do-file computes mean h2m for any variety of h2m statistics
 labelled XXXXX_h2m. Means are computed by year and for the pooled sample */;
 
+* For HFCS, do this by wave rather than year;
 if "$dataset"=="HFCS" {;
 	gen year = wave;
 };
@@ -15,6 +16,7 @@ foreach h2mvar of varlist *h2m  {;
 };
 
 if ("$dataset"=="CEX") {;
+	* Don't have data for other h2m statistics for CEX;
 	local h2ms h2m;
 };
 else {;
@@ -22,7 +24,8 @@ else {;
 };
 
 * Get means by year;
-if ("$dataset"=="SCF") {;
+if inlist"$dataset","SCF","HFCS","CEX") {;
+	* Find point estimate for each imputation, then average over imputations;
 	collapse (mean) `h2ms' [aw=wgt], by(year im0100);
 	collapse (mean) `h2ms', by(year);
 

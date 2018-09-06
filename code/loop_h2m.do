@@ -12,25 +12,30 @@ else {;
 };
 
 if "$dataset"=="SCF" & ${stderrors}==1 {;
+	* Merge replicate weights;
 	cd ${basedir}/build/temp;
 	merge m:1 YY1 year using replicates.dta, nogen;
 	gen rep = im0100;
 };
 else if "$dataset"=="HFCS" & ${stderrors}==1 {;
+	* Merge replicate weights;
 	cd ${basedir}/build/temp;
 	merge m:1 id wave using ${basedir}/build/input/HFCS1_3/W.dta, nogen;
 	merge m:1 id wave using ${basedir}/build/input/HFCS2_1/W.dta, nogen;
 	local count = 1;
 	foreach var of varlist wr* {;
+		* Replicate weight;
 		rename `var' wt1b`count';
 		local countback = 1000 - `count';
+		* Number of times observation is repeated;
 		gen mm`countback' = 1;
 		local count = `count' + 1;
 	};
 	gen rep = im0100;
 };
 else if "$dataset"=="PSID" {;
-gen im0100 = 1;
+	* Label each observation as first imputation;
+	gen im0100 = 1;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
