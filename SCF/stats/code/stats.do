@@ -26,7 +26,7 @@ drop if (labearn1 == 0 & selfearn1>0) | (labearn2 == 0 &  selfearn2>0);
 
 ////////////////////////////////////////////////////////////////////////////////
 * SELECT WHETHER TO COMPUTE STANDARD ERRORS;
-global stderrors 1;
+global stderrors 0;
 
 ////////////////////////////////////////////////////////////////////////////////
 * Select which income variable to use (labinc,netlabinc);

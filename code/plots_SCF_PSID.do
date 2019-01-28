@@ -17,13 +17,43 @@ cd $basedir/stats/output;
 graph export ${dataset}_h2m_age.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
-* h2m by year;
+* h2m by year -- overall;
 preserve;
 graph bar Wh2m Ph2m [aw=wgt], over(year) stack
 	graphregion(color(white))
 	legend(label(1 "Wealthy Hand-to-Mouth") label(2 "Poor Hand-to-Mouth"))
 	intensity(*0.9)
-	lintensity(*0.9);
+	lintensity(*0.9)
+	ylabel(0(0.1)0.4);
 restore;
 cd $basedir/stats/output;
 graph export ${dataset}_h2m_year.png, replace;
+
+////////////////////////////////////////////////////////////////////////////////
+if "$dataset"=="SCF" {;
+	* h2m by year -- gov workers;
+	preserve;
+	keep if (industry==7) | (industrysp==7);
+	graph bar Wh2m Ph2m [aw=wgt], over(year) stack
+		graphregion(color(white))
+		legend(label(1 "Wealthy Hand-to-Mouth") label(2 "Poor Hand-to-Mouth"))
+		intensity(*0.9)
+		lintensity(*0.9)
+		ylabel(0(0.1)0.4);
+	restore;
+	cd $basedir/stats/output;
+	graph export ${dataset}_h2m_year_gov.png, replace;
+	
+	* h2m by year -- non-gov workers;
+	preserve;
+	keep if (industry!=7) & (industrysp!=7);
+	graph bar Wh2m Ph2m [aw=wgt], over(year) stack
+		graphregion(color(white))
+		legend(label(1 "Wealthy Hand-to-Mouth") label(2 "Poor Hand-to-Mouth"))
+		intensity(*0.9)
+		lintensity(*0.9)
+		ylabel(0(0.1)0.4);
+	restore;
+	cd $basedir/stats/output;
+	graph export ${dataset}_h2m_year_nongov.png, replace;
+};

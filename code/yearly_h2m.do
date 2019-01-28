@@ -24,7 +24,7 @@ else {;
 };
 
 * Get means by year;
-if inlist"$dataset","SCF","HFCS","CEX") {;
+if inlist("$dataset","SCF","HFCS","CEX") {;
 	* Find point estimate for each imputation, then average over imputations;
 	collapse (mean) `h2ms' [aw=wgt], by(year im0100);
 	collapse (mean) `h2ms', by(year);

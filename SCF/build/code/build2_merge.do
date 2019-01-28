@@ -40,6 +40,10 @@ use year Y1 YY1 X432 X413 X421 X424 X427 X430 X7132 ///
 ///////////////////////////////////////////////////////////////////////////////
 // renames or defines variables in the full data set
 
+// industry
+gen industry = X7402
+gen industrysp = X7412
+
 // HELOC limit
 gen heloc_lim = X1104 + X1115 + X1126
 replace heloc_lim = 0 if heloc_lim < 0
