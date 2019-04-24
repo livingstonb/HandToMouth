@@ -296,7 +296,8 @@ replace CPIADJ = CPIBASE/190.2 if year == 1989
 local z ccdebt hh_earnings hh_selfy uiben childben tanf ssinc othinc labinc ///
 	labincplus maxcredit rentpmt homeloanpmt carpmt educloanpmt consloanpmt ///
 	pensloanpmt supportpmt committed_cons misc_illiq usuallabinc taxes_mar_kids ///
-	taxes_sing_nokids heloc_lim labearn1 labearn2 selfearn1 selfearn2
+	taxes_sing_nokids heloc_lim labearn1 labearn2 selfearn1 selfearn2 ///
+	committed_cons
 foreach k of local z {
 replace `k' = `k'*CPIADJ
 }
