@@ -21,7 +21,8 @@ set maxvar 10000
 ////////////////////////////////////////////////////////////////////////////////
 // 1. Global macros for file path
 // global basedir /Users/brianlivingston/Documents/GitHub/HandToMouth/SCF
-global basedir C:/Users/Brian/Documents/GitHub/HandToMouth/SCF
+// global basedir C:/Users/Brian/Documents/GitHub/HandToMouth/SCF
+global basedir /media/hdd/GitHub/HandToMouth/SCF
 global fulldir "${basedir}/build/input/full"
 global extractdir "${basedir}/build/input/extract"
 ////////////////////////////////////////////////////////////////////////////////

@@ -32,6 +32,72 @@ graph export ${dataset}_h2m_year.png, replace;
 
 ////////////////////////////////////////////////////////////////////////////////
 if "$dataset"=="SCF" {;
+	* h2m by race -- overall;
+	local races white black hispanic;
+	forvalues irace = 1/4 {;
+		preserve;
+		
+		if `irace' < 4 {;
+			keep if race == `irace';
+			local title : word `irace' of `races';
+			local label HtM, `title' respondents;
+		};
+		else {;
+			local title all;
+			local label "HtM, all households";
+		};
+		graph bar Wh2m Ph2m [aw=wgt], over(year) stack
+			graphregion(color(white))
+			legend(label(1 "Wealthy Hand-to-Mouth") label(2 "Poor Hand-to-Mouth"))
+			intensity(*0.9)
+			lintensity(*0.9)
+			ylabel(0(0.1)0.4)
+			title("`label'");
+		restore;
+		cd $basedir/stats/output;
+		graph export ${dataset}_h2m_year_`title'.png, replace;
+	};
+};
+
+////////////////////////////////////////////////////////////////////////////////
+#delimit;
+if "$dataset"=="SCF" {;
+	* h2m by race -- overall;
+	gen Nh2m = (h2m == 0);
+	replace Nh2m = . if (h2m == .);
+	
+	forvalues irace = 1/3 {;
+		gen Wh2m_race`irace' = Wh2m if race == `irace';
+		gen Nh2m_race`irace' = Nh2m if race == `irace';
+		gen Ph2m_race`irace' = Ph2m if race == `irace';
+	};
+
+	local htm_statuses Wh2m_race Ph2m_race Nh2m_race;
+	local labels WHtM PHtM NHtM;
+	local tickmaxes 0.3 0.3 0.8;
+
+	forvalues ii = 1/3 {;
+		local status : word `ii' of `htm_statuses';
+		local label : word `ii' of `labels';
+		local tickmax : word `ii' of `tickmaxes';
+		
+		preserve;
+		
+		graph bar `status'* [aw=wgt] if year >= 1998, over(year)
+			graphregion(color(white))
+			legend(label(1 "White") label(2 "Black") label(3 "Hispanic"))
+			intensity(*0.9)
+			lintensity(*0.9)
+			ylabel(0(0.1)`tickmax')
+			title("`label'");
+		restore;
+		cd $basedir/stats/output;
+		graph export ${dataset}_year_race_`label'.png, replace;
+	};
+};
+
+////////////////////////////////////////////////////////////////////////////////
+if "$dataset"=="SCF" {;
 	* h2m by year -- gov workers;
 	preserve;
 	keep if (industry==7) | (industrysp==7);

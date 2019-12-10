@@ -62,12 +62,30 @@ gen consumption = CONSUMPTION;
 global borrowlimtype $BORROWLIMTYPE;
 global h2mtype	$H2MTYPE;
 
+////////////////////////////////////////////////////////////////////////////////
+* HtM BY RACE FOR EACH SPEC (chosen in loop_h2m.do), STORE RESULTS AS MATRIX;
+
+local races white black hispanic;
+
+forvalues irace = 1/3 {;
+	preserve;
+	keep if race == `irace';
+	do ${basedir}/../code/loop_h2m.do;
+	
+	clear;
+	svmat H2Mrobust, names(col);
+
+	local label : word `irace' of `races';
+	save ${basedir}/stats/output/HtM_`label'.dta, replace;
+	restore;
+};
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 * LOOP THROUGH SPECIFICATIONS (chosen in loop_h2m.do), STORE RESULTS AS MATRIX;
 
 do ${basedir}/../code/loop_h2m.do;
-
 
 ////////////////////////////////////////////////////////////////////////////////
 * BASELINE SPECIFICATION - COMPUTE H2M BY YEAR;

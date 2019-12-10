@@ -6,7 +6,8 @@ GALLUP US Daily. Code written by Brian Livingston. */;
 ////////////////////////////////////////////////////////////////////////////////
 clear*;
 set more 1;
-global basedir /Users/Brian/Documents/GitHub/HandToMouth/GALLUP;
+// global basedir /Users/Brian/Documents/GitHub/HandToMouth/GALLUP;
+global basedir D:\GitHub\HandToMouth\GALLUP;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD DIRECTORY;

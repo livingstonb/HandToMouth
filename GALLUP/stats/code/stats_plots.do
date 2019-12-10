@@ -17,6 +17,19 @@ graph bar h2m_majorpurchase h2m_affordneeds [aw=wgt], over(incomenarrow)
 cd $basedir/stats/output;
 graph export GALLUPbar.png, replace;
 
+* Population shares corresponding with the above bar chart;
+preserve;
+collapse (firstnm) pop_incshare, by(incomenarrow);
+graph bar pop_incshare, over(incomenarrow, label(angle(0)))
+	ytitle("Population shares")
+	intensity(*0.9)
+	lintensity(*0.9)
+	graphregion(color(white));
+restore;
+		   
+cd $basedir/stats/output;
+graph export GALLUPpopshare.png, replace;
+
 * Time plot of majorpurchase;
 preserve;
 gen timeindex = dofm(monthdate);

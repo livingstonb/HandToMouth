@@ -48,13 +48,20 @@ gen 	monthdate 		= mofd(INT_DATE);
 format 	monthdate 		%tm;
 rename 	MOTHERLODE_ID 	id;
 
-
-/* Normalize weights since sums are dramatically different depending on year */;
+/* Normalize weights since sums are different across years */;
 bysort INT_DATE: egen dwgtsum = sum(dailywgt);
 replace dailywgt = dailywgt/dwgtsum;
 bysort year: egen MSAsum = sum(MSAwgt);
 replace MSAwgt = MSAwgt/MSAsum;
 
+/* Population shares of income */;
+egen pop_total = total(MSAwgt) if inlist(incomenarrow,1,2,3,4);
+gen pop_incshare = .;
+forvalues i = 1/4 {;
+	egen pop_inc`i' = total(MSAwgt) if incomenarrow == `i';
+	replace pop_incshare = pop_inc`i' / pop_total if incomenarrow == `i';
+};
+label variable pop_incshare "Population Share";
 
 ////////////////////////////////////////////////////////////////////////////////
 * SAVE AND REMOVE TEMP FILES;
