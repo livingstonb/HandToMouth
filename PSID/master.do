@@ -5,7 +5,7 @@ set more 1;
 
 /* This is the main do-file for computing hand-to-mouth statistics in the PSID.*/;
 
-global basedir /Users/Brian/Documents/GitHub/HandToMouth/PSID ;
+global basedir /media/hdd/GitHub/HandToMouth/PSID ;
 
 ////////////////////////////////////////////////////////////////////////////////
 * BUILD DIRECTORY;
