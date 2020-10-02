@@ -2,7 +2,7 @@
 #delimit;
 set more 1;
 cd $basedir/build/output;
-use SCF_89_16_cleaned.dta, clear;
+use SCF_89_19_cleaned.dta, clear;
 cap mkdir $basedir/stats/output;
 
 /* This is the main do-file for computing hand-to-mouth statistics for the SCF.*/;

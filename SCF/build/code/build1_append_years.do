@@ -13,8 +13,12 @@ cd ${extractdir}
 
 ////////////////////////////////////////////////////////////////////////////////
 //append extract data together for all of the years and puts the survey year
-use rscfp2016.dta
-gen year = 2016
+use rscfp2019.dta
+gen Y1 = y1
+gen YY1 = yy1
+gen year = 2019
+append using rscfp2016.dta
+replace year = 2016 if year == .
 append using rscfp2013.dta
 replace year = 2013 if year == .
 append using rscfp2010.dta
@@ -38,16 +42,19 @@ replace Y1 = X1 if year == 1989
 replace YY1 = XX1 if year == 1989
 
 cd ${basedir}/build/temp
-save SCF_89_16_extract.dta, replace
+save SCF_89_19_extract.dta, replace
 
 clear
 
 //append full data together for all of the years and puts the survey year
 cd ${fulldir}
 //merges full data
-use p16i6.dta
-gen year = 2016
-append using p13i6.dta
+use p19i6.dta
+rename *, upper
+gen year = 2019
+append using p16i6.dta
+replace year = 2016 if year == .
+append using p13i6.dta 
 replace year = 2013 if year == .
 append using p10i6.dta
 replace year = 2010 if year == .
@@ -70,5 +77,5 @@ replace Y1 = X1 if year == 1989
 replace YY1 = XX1 if year ==1989
 
 cd ${basedir}/build/temp
-save SCF_89_16_full.dta, replace
+save SCF_89_19_full.dta, replace
 ///////////////////////////////////////////////////////////////////////////////

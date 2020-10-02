@@ -2,7 +2,7 @@
 #delimit;
 set more 1;
 cd $basedir/build/output;
-use SCF_89_16_cleaned.dta, clear;
+use SCF_89_19_cleaned.dta, clear;
 cap mkdir $basedir/stats/output;
 
 /* This file computes hand-to-mouth statistics from direct survey questions

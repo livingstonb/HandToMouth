@@ -2,7 +2,7 @@
 Written by Justin Weidner, edited and re-organized by Brian
 Livingston.
 
-Computes HtM statistics for the US based on the 1989-2016 SCF surveys.
+Computes HtM statistics for the US based on the 1989-2019 SCF surveys.
 Output:
 	Robustness checks 				- H2Mrobust.dta
 	Robustness checks (std errors)	- H2Mrobust_stderrors.dta

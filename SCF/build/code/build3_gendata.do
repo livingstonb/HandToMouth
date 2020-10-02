@@ -7,7 +7,7 @@ cap mkdir ${basedir}/build/output
 // this file generates all of the different definitions for the robustness checks
 
 cd ${basedir}/build/temp
-use SCF_89_16_merged.dta, clear
+use SCF_89_19_merged.dta, clear
 
 gen labincwork = .
 replace labincwork = labinc if age<=59
@@ -106,7 +106,7 @@ label values agedum l_age
 
 drop X*
 cd ${basedir}/build/output
-save SCF_89_16_cleaned.dta, replace
+save SCF_89_19_cleaned.dta, replace
 
 cd ${basedir}/build/temp
-!rm SCF_89_16_merged.dta
+!rm SCF_89_19_merged.dta

@@ -35,7 +35,7 @@ use year Y1 YY1 X432 X413 X421 X424 X427 X430 X7132 ///
 	   X7524 X7523 X7522 X7185 X4012 X11029 X11129 X11329 X11429 ///
 	   X1918 X1919 X11528 X11529 X5732 X5734 X7508 X4100 X4700 X4022 X4026 X4030 X7131 X7362 ///
 	   X7650 X7372 X108 X114 X120 X126 X132 X202 X208 X214 X220 X226 X8023 X1104 X1115 X1126 ///
-	   using SCF_89_16_full.dta
+	   using SCF_89_19_full.dta
 ///////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -286,6 +286,7 @@ replace `lagvar'=`lagvar'*CPILAG
 //use September values for each year (around when the survey was done)
 gen CPIADJ = 0
 scalar CPIBASE = 320.8
+replace CPIADJ = CPIBASE/378.1 if year == 2019
 replace CPIADJ = CPIBASE/363.5 if year == 2016
 replace CPIADJ = CPIBASE/344.3 if year == 2013
 replace CPIADJ = CPIBASE/320.8 if year == 2010
@@ -309,7 +310,7 @@ replace `k' = `k'*CPIADJ
 
 ///////////////////////////////////////////////////////////////////////////////
 //merges data with the extract data
-merge 1:1 Y1 year using SCF_89_16_extract.dta
+merge 1:1 Y1 year using SCF_89_19_extract.dta
 drop _merge
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -335,8 +336,8 @@ destring im0100, replace
 
 ///////////////////////////////////////////////////////////////////////////////
 cd ${basedir}/build/temp
-save SCF_89_16_merged.dta, replace
+save SCF_89_19_merged.dta, replace
 
-!rm SCF_89_16_full.dta
-!rm SCF_89_16_extract.dta
+!rm SCF_89_19_full.dta
+!rm SCF_89_19_extract.dta
 ///////////////////////////////////////////////////////////////////////////////

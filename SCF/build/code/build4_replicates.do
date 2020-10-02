@@ -4,7 +4,14 @@ clear
 // merging
 
 cd ${basedir}/build/input/replicates
-local yys 01 89 92 95 98 04 07 10 13 16
+
+use p19_rw1
+rename *, upper
+tempfile repsy19
+save `repsy19'
+clear
+
+local yys 01 89 92 95 98 04 07 10 13 16 19
 foreach yy of local yys {
 	if `yy'==01 {
 		use p01_rw1, clear
@@ -12,7 +19,14 @@ foreach yy of local yys {
 		rename wt1* mm* y1, upper
 	}
 	else {
-		append using p`yy'_rw1
+
+		if `yy'==19 {
+			append using `repsy19'
+		}
+		else {
+			append using p`yy'_rw1
+		}
+
 		if `yy' >= 89 {
 			replace year = 19`yy' if year==.
 		}
